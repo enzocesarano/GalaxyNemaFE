@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const MyNav = () => {
   return (
-      <Navbar expand="lg" className="d-flex flex-column align-items-start p-0">
+      <Navbar expand="lg" className="d-flex flex-column align-items-start p-0 mb-5">
         <Navbar.Brand href="#home" className="text-light p-0 mb-4 fw-bold pt-2">
           GALAXYNEMA
         </Navbar.Brand>

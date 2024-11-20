@@ -2,10 +2,10 @@ import { Button, Card } from "react-bootstrap";
 
 const MyCards = () => {
   return (
-    <Card className="cards rounded-4 bg-transparent border-black p-2 cursor-pointer">
+    <Card className="cards rounded-4 bg-transparent border-black p-2 cursor-pointer mb-2">
       <Card.Img
         variant="top"
-        src="https://www.thespacecinema.it/-/media/tsc/2024/da-urlo/terrifier-3/new/locandina_da-urlo_terrifieri3.jpg?w=200"
+        src="https://www.thespacecinema.it/-/media/tsc/2024/10/venom-the-last-dance/locandina_vonomthelastdance.jpg?w=200"
         className="w-100 rounded-4 mb-2"
       />
 

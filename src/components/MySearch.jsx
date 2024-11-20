@@ -3,7 +3,7 @@ import { Form } from "react-bootstrap"
 const MySearch = () => {
 
     return(
-        <Form className="d-flex mb-4">
+        <Form className="d-flex mb-4 mt-1">
             <Form.Control
               type="search"
               placeholder="Search..."
