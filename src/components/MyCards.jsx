@@ -13,7 +13,7 @@ const MyCards = () => {
         <Card.Title className="fs-6 m-0 p-0 text-secondary fw-bold">
         Terrifier 3
         </Card.Title>
-        <i class="bi bi-play-circle-fill text-secondary"></i>
+        <i className="bi bi-play-circle-fill text-secondary"></i>
       </div>
     </Card>
   );

@@ -1,12 +1,13 @@
 import { Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+
 const MyNav = () => {
   return (
       <Navbar expand="lg" className="d-flex flex-column align-items-start p-0 mb-5">
-        <Navbar.Brand href="#home" className="text-light p-0 mb-4 fw-bold pt-2">
-          GALAXYNEMA
-        </Navbar.Brand>
+        <div className="w-100 mb-5">
+          <img src="/logo.svg" alt="Galaxynema Logo" className="img-fluid w-75" />
+        </div>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="d-flex flex-column w-100">
           <Link href="#" className="nav-link active text-secondary fw-bold w-100 p-2 px-3 rounded-4">

@@ -5,7 +5,7 @@ const MyLogin = () => {
   return (
     <>
     <p className="text-secondary fw-bold px-3 w-100 rounded-4 fs-4 m-0 mb-3">
-    Login<i class="bi bi-arrow-right-circle-fill ms-3 fs-5"></i></p>
+    Login<i className="bi bi-arrow-right-circle-fill ms-3 fs-5"></i></p>
     <Form className="mb-2">
       <Form.Control
         type="text"
@@ -21,7 +21,7 @@ const MyLogin = () => {
       />
     </Form>
 
-    <Link className="nav-link text-secondary fw-bold w-100 p-2 px-3 rounded-4" ><i class="bi bi-cursor-fill me-2"></i>Oppure registrati</Link>
+    <Link className="nav-link text-secondary fw-bold w-100 p-2 px-3 rounded-4" ><i className="bi bi-cursor-fill me-2"></i>Oppure registrati</Link>
     </>
   );
 };
