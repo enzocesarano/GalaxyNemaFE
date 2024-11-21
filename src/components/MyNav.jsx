@@ -10,7 +10,7 @@ const MyNav = () => {
         </div>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="d-flex flex-column w-100">
-          <Link href="#" className="nav-link active text-secondary fw-bold w-100 p-2 px-3 rounded-4">
+          <Link to={"/"} className="nav-link active text-secondary fw-bold w-100 p-2 px-3 rounded-4">
             <i className="bi bi-house-fill me-2"></i>Home
           </Link>
           <Link href="#" className="nav-link text-secondary fw-bold w-100 p-2 px-3 rounded-4">

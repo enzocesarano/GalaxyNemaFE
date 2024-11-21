@@ -24,7 +24,7 @@ const MyLogin = () => {
         />
       </Form>
 
-      <Link className="nav-link text-secondary fw-bold w-100 p-2 px-3 rounded-4">
+      <Link to={"/register"} className="nav-link text-secondary fw-bold w-100 p-2 px-3 rounded-4">
         <i className="bi bi-cursor-fill me-2"></i>Oppure registrati
       </Link>
     </div>

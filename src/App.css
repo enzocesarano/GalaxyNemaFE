@@ -152,3 +152,7 @@
   box-shadow: 0 0 10px var(--primary-color);
   background-color: var(--primary-color) !important;
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.3);
+}
