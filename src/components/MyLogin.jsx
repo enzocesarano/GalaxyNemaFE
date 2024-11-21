@@ -9,16 +9,18 @@ const MyLogin = () => {
       </p>
       <Form className="mb-2">
         <Form.Control
+          required
           type="text"
           placeholder="Username..."
           className="rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2"
-          aria-label="Search"
+          aria-label="text"
         />
         <Form.Control
+          required
           type="password"
           placeholder="Password..."
           className="rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light"
-          aria-label="Search"
+          aria-label="password"
         />
       </Form>
 

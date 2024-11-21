@@ -5,10 +5,12 @@ import MyProfNav from "./MyProfNav";
 import MyHero from "./MyHero";
 import MyCards from "./MyCards";
 import MyLogin from "./MyLogin";
+import MyDaily from "./MyDaily";
+import MyNews from "./MyNews";
 
 const MyHome = () => {
   return (
-    <Container fluid className="vh-100 p-5 bg-black">
+    <Container fluid className="vh-100 p-5 bg-black overflow-hidden">
       <Row className="bg-dark h-100 rounded-5 p-4">
         <Col className="col-2 pe-5 d-flex flex-column justify-content-between">
           <MyNav />
@@ -35,8 +37,9 @@ const MyHome = () => {
             </Col>
           </Row>
         </Col>
-        <Col className="col-4">
-          
+        <Col className="col-4 ps-5 d-flex flex-column justify-content-between">
+          <MyDaily />
+          {/* <MyNews /> */}
         </Col>
       </Row>
     </Container>

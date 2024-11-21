@@ -37,7 +37,7 @@
   background-color: black !important;
 }
 
-.card div i{
+.cards div i{
   transition-duration: 0.3s;
 }
 
@@ -102,3 +102,53 @@
   width: 0px;
 }
 
+.checkbox-label {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 25px;
+  height: 25px;
+  border: 1px solid #6C757D;
+  border-bottom: 4px solid #6C757D;
+  border-radius: 10px 10px 0 0 ;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
+.checkbox-label input[type="checkbox"]:checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.poltrona{
+  background-color: rgb(5, 77, 105) !important;
+}
+
+.poltrona[type="checkbox"]:checked{
+  background-color: rgb(7, 112, 153) !important;
+  border-color: var(--primary-color) !important; 
+  box-shadow: 0 0 8px var(--primary-color);
+}
+
+
+.sala {
+  border-color: var(--primary-color) !important;
+}
+
+.botton-check {
+  background-color: var(--primary-color);
+  transition-duration: 0.3s !important;
+}
+
+.botton-check:hover {
+  border-color: var(--primary-color) !important; 
+  box-shadow: 0 0 10px var(--primary-color);
+  background-color: var(--primary-color) !important;
+}
