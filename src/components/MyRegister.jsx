@@ -14,6 +14,7 @@ import MyNav from "./MyNav";
 import MyLogin from "./MyLogin";
 import MyProfNav from "./MyProfNav";
 import { register } from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 const MyRegister = () => {
   const [formData, setFormData] = useState({
@@ -28,13 +29,8 @@ const MyRegister = () => {
 
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
+  const [generalError, setGeneralError] = useState("");
   const navigate = useNavigate();
-
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -67,151 +63,153 @@ const MyRegister = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const isValid = validateForm();
 
     if (isValid) {
-      register(formData)
-      setFormData({
-        nome: "",
-        cognome: "",
-        username: "",
-        email: "",
-        password: "",
-        telefono: "",
-        data_nascita: "",
-      });
-      navigate("/")
+      try {
+        await register(formData);
+        setSuccessMessage("Registrazione completata con successo!");
+        setFormData({
+          nome: "",
+          cognome: "",
+          username: "",
+          email: "",
+          password: "",
+          telefono: "",
+          data_nascita: "",
+        });
+
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
+      } catch (error) {
+        console.error("Errore durante la registrazione:", error);
+        setGeneralError(error.message);
+      }
     }
   };
 
   return (
     <>
-      <Container fluid className="vh-100 p-5 bg-black overflow-hidden">
-        <Row className="bg-dark h-100 rounded-5 p-4">
-          <Col className="col-2 pe-5 d-flex flex-column justify-content-between">
-            <MyNav />
-            <MyLogin />
-            <MyProfNav />
-          </Col>
-          <Col className="col-6 px-3 h-100 overflow-card">
-            <Form noValidate onSubmit={handleSubmit} className="mt-2">
-              <Row className="mb-3">
-                <Form.Group as={Col} controlId="formNome">
-                  <Form.Control
-                    type="text"
-                    placeholder="Inserisci il tuo nome"
-                    name="nome"
-                    value={formData.nome}
-                    onChange={handleInputChange}
-                    className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2 ${
-                      errors.nome ? "is-invalid" : ""
-                    }`}
-                  />
-                  <div className="invalid-feedback">{errors.nome}</div>
-                </Form.Group>
+      <Col className="col-6 px-3 h-100 overflow-card">
+        <Form noValidate onSubmit={handleSubmit} className="mt-2">
+          <Row className="mb-3">
+            <Form.Group as={Col} controlId="formNome">
+              <Form.Control
+                type="text"
+                placeholder="Inserisci il tuo nome"
+                name="nome"
+                value={formData.nome}
+                onChange={handleInputChange}
+                className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2 ${
+                  errors.nome ? "is-invalid" : ""
+                }`}
+              />
+              <div className="invalid-feedback">{errors.nome}</div>
+            </Form.Group>
 
-                <Form.Group as={Col} controlId="formCognome">
-                  <Form.Control
-                    type="text"
-                    placeholder="Inserisci il tuo cognome"
-                    name="cognome"
-                    value={formData.cognome}
-                    onChange={handleInputChange}
-                    className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2 ${
-                      errors.cognome ? "is-invalid" : ""
-                    }`}
-                  />
-                  <div className="invalid-feedback">{errors.cognome}</div>
-                </Form.Group>
-              </Row>
+            <Form.Group as={Col} controlId="formCognome">
+              <Form.Control
+                type="text"
+                placeholder="Inserisci il tuo cognome"
+                name="cognome"
+                value={formData.cognome}
+                onChange={handleInputChange}
+                className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2 ${
+                  errors.cognome ? "is-invalid" : ""
+                }`}
+              />
+              <div className="invalid-feedback">{errors.cognome}</div>
+            </Form.Group>
+          </Row>
 
-              <Form.Group className="mb-3" controlId="formUsername">
-                <Form.Control
-                  type="text"
-                  placeholder="Inserisci il tuo username"
-                  name="username"
-                  value={formData.username}
-                  onChange={handleInputChange}
-                  className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2 ${
-                    errors.username ? "is-invalid" : ""
-                  }`}
-                />
-                <div className="invalid-feedback">{errors.username}</div>
-              </Form.Group>
+          <Form.Group className="mb-3" controlId="formUsername">
+            <Form.Control
+              type="text"
+              placeholder="Inserisci il tuo username"
+              name="username"
+              value={formData.username}
+              onChange={handleInputChange}
+              className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2 ${
+                errors.username ? "is-invalid" : ""
+              }`}
+            />
+            <div className="invalid-feedback">{errors.username}</div>
+          </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formEmail">
-                <Form.Control
-                  type="email"
-                  placeholder="Inserisci la tua email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2 ${
-                    errors.email ? "is-invalid" : ""
-                  }`}
-                />
-                <div className="invalid-feedback">{errors.email}</div>
-              </Form.Group>
+          <Form.Group className="mb-3" controlId="formEmail">
+            <Form.Control
+              type="email"
+              placeholder="Inserisci la tua email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2 ${
+                errors.email ? "is-invalid" : ""
+              }`}
+            />
+            <div className="invalid-feedback">{errors.email}</div>
+          </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formPassword">
-                <Form.Control
-                  type="password"
-                  placeholder="Inserisci la tua password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2 ${
-                    errors.password ? "is-invalid" : ""
-                  }`}
-                />
-                <div className="invalid-feedback">{errors.password}</div>
-              </Form.Group>
+          <Form.Group className="mb-3" controlId="formPassword">
+            <Form.Control
+              type="password"
+              placeholder="Inserisci la tua password"
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2 ${
+                errors.password ? "is-invalid" : ""
+              }`}
+            />
+            <div className="invalid-feedback">{errors.password}</div>
+          </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formTelefono">
-                <Form.Control
-                  type="text"
-                  placeholder="Inserisci il tuo numero di telefono"
-                  name="telefono"
-                  value={formData.telefono}
-                  onChange={handleInputChange}
-                  className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2 ${
-                    errors.telefono ? "is-invalid" : ""
-                  }`}
-                />
-                <div className="invalid-feedback">{errors.telefono}</div>
-              </Form.Group>
+          <Form.Group className="mb-3" controlId="formTelefono">
+            <Form.Control
+              type="text"
+              placeholder="Inserisci il tuo numero di telefono"
+              name="telefono"
+              value={formData.telefono}
+              onChange={handleInputChange}
+              className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2 ${
+                errors.telefono ? "is-invalid" : ""
+              }`}
+            />
+            <div className="invalid-feedback">{errors.telefono}</div>
+          </Form.Group>
 
-              <Form.Group className="mb-3" controlId="formDataNascita">
-                <Form.Control
-                  type="date"
-                  name="data_nascita"
-                  value={formData.data_nascita}
-                  onChange={handleInputChange}
-                  className={`rounded-4 px-4 py-2 text-secondary bg-black border-0 mb-2 ${
-                    errors.data_nascita ? "is-invalid" : ""
-                  }`}
-                />
-                <div className="invalid-feedback">{errors.data_nascita}</div>
-              </Form.Group>
+          <Form.Group className="mb-3" controlId="formDataNascita">
+            <Form.Control
+              type="date"
+              name="data_nascita"
+              value={formData.data_nascita}
+              onChange={handleInputChange}
+              className={`rounded-4 px-4 py-2 text-secondary bg-black border-0 mb-2 ${
+                errors.data_nascita ? "is-invalid" : ""
+              }`}
+            />
+            <div className="invalid-feedback">{errors.data_nascita}</div>
+          </Form.Group>
 
-              {successMessage && (
-                <Alert variant="success" className="mt-3">
-                  {successMessage}
-                </Alert>
-              )}
+          {successMessage && (
+            <p className="text-success fs-6 mt-2">{successMessage}</p>
+          )}
 
-              <Button className="botton-check border-0 rounded-4 text-black fw-bold" type="submit">
-                Registrati
-              </Button>
-            </Form>
-          </Col>
-          <Col className="col-4 ps-5 d-flex flex-column justify-content-between">
-            <MyDaily />
-          </Col>
-        </Row>
-      </Container>
+          {generalError && (
+            <p className="text-danger fs-6 mt-2">{generalError}</p>
+          )}
+
+          <Button
+            className="botton-check border-0 rounded-4 text-black fw-bold"
+            type="submit"
+          >
+            Registrati
+          </Button>
+        </Form>
+      </Col>
     </>
   );
 };
