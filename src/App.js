@@ -11,7 +11,7 @@ import MyProfNav from "./components/MyProfNav";
 import MyDaily from "./components/MyDaily";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { meLogin } from "./redux/actions";
+import { filmsArray, meLogin } from "./redux/actions";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -25,6 +25,8 @@ function App() {
     } else {
       setIsAuthenticated(false);
     }
+
+    dispatch(filmsArray())
   }, []);
 
   const handleLoginSuccess = () => {
@@ -47,7 +49,7 @@ function App() {
           </Col>
           <Routes>
             <Route path="/" element={<MyHome />} />
-            <Route path="/register" element={<MyRegister />} />
+            {!isAuthenticated && <Route path="/register" element={<MyRegister />} />}
           </Routes>
           <Col className="col-4 ps-5 d-flex flex-column justify-content-between">
             <MyDaily />

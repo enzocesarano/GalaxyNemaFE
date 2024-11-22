@@ -4,17 +4,9 @@ import {
   Button,
   Col,
   Row,
-  Container,
-  Alert,
-  Modal,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom"; // Importa useNavigate
-import MyDaily from "./MyDaily";
-import MyNav from "./MyNav";
-import MyLogin from "./MyLogin";
-import MyProfNav from "./MyProfNav";
 import { register } from "../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
 
 const MyRegister = () => {
   const [formData, setFormData] = useState({
@@ -55,7 +47,7 @@ const MyRegister = () => {
         "La password deve contenere almeno 8 caratteri, una maiuscola, un numero e un carattere speciale.";
     if (!formData.telefono.trim() || !phoneRegex.test(formData.telefono))
       newErrors.telefono =
-        "Inserisci un numero di telefono valido (es. +399470757363).";
+        "Inserisci un numero di telefono valido (es. +393470757363).";
     if (!formData.data_nascita)
       newErrors.data_nascita = "La data di nascita è obbligatoria.";
 
