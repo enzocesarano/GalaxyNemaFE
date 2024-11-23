@@ -27,7 +27,7 @@
 
 .cards {
   width: 15%;
-  transition-duration: 0.2s;
+  transition-duration: 0.5s;
 }
 
 .cards:hover{
@@ -65,16 +65,16 @@
   outline: none;
 }
 
-.hero-hover img {
+.hero-hover .hero {
   transition-duration: 0.5s;
 }
 
-.hero-hover:hover img {
+.hero-hover:hover .hero {
   filter: brightness(0.3)
 }
 
 .icon-wrapper {
-  top: 90%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   transition-duration: 0.5s;
@@ -83,16 +83,8 @@
 
 .hero-hover:hover .icon-wrapper{
   opacity: 1;
-  top: 50%;
 }
 
-.hero-hover .icon-wrapper i{
-  transition-duration: 1s;
-}
-
-.hero-hover:hover .icon-wrapper i{
-  color: var(--primary-color) !important; 
-}
 
 .overflow-card {
   overflow-y: scroll !important;
@@ -128,8 +120,38 @@
 }
 
 .poltrona{
-  background-color: rgb(5, 77, 105) !important;
+  background-color: #054d69 !important;
 }
+
+.occupato{
+  background-color: #700303 !important;
+}
+
+.disponibileLegenda {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: #1A1A1A;
+  border: 1px solid #6C757D,
+}
+
+.occupatoLegenda{
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: #700303;
+  border: 1px solid #6C757D,
+}
+
+.poltronaLegenda{
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: #054d69;
+  border: 1px solid #6C757D,
+}
+
+
 
 .poltrona[type="checkbox"]:checked{
   background-color: rgb(7, 112, 153) !important;
@@ -160,3 +182,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .fs-small {
   font-size: small !important;
 }
+
+.overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  
+}
+
+
+.fs-supersmall {
+  font-size: 0.6em !important;
+}
+
+

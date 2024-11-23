@@ -1,34 +1,36 @@
-import { Card, Spinner } from "react-bootstrap";
+import { Card, Placeholder} from "react-bootstrap";
 
 const MyCards = ({ film, isLoading }) => {
   if (isLoading) {
     return (
-      <Card className="cards rounded-4 bg-transparent border-black p-2 cursor-pointer mb-2">
-        {/* Placeholder image and content */}
-        <div className="w-100 rounded-4 mb-2 bg-dark" style={{ height: "150px" }}></div>
-        <div className="d-flex justify-content-between align-items-center p-1">
-          <Card.Title className="fs-6 m-0 p-0 text-secondary fw-bold">
-            <Spinner animation="border" size="sm" />
-          </Card.Title>
-          <i className="bi bi-play-circle-fill text-secondary"></i>
-        </div>
+      <Card
+        className="w-100 bg-dark border-0 p-2 rounded-4"
+        style={{ height: "16rem" }}
+      >
+        <div
+          className="w-100 h-75 rounded-4 bg-black"
+          style={{ backgroundColor: "#343a40" }}
+        ></div>
+        <Card.Body className="p-2">
+          <Placeholder as={Card.Title} animation="glow" className="bg-black">
+            <Placeholder xs={6} className="bg-dark" />
+          </Placeholder>
+          <Placeholder as={Card.Text} animation="glow" className="bg-black">
+            <Placeholder xs={7} className="bg-dark" />{" "}
+            <Placeholder xs={4} className="bg-dark" />
+          </Placeholder>
+        </Card.Body>
       </Card>
     );
   }
 
   return (
-    <Card className="cards rounded-4 bg-transparent border-black p-2 cursor-pointer mb-2">
+    <Card className="cards w-100 rounded-4 bg-transparent border-dark p-2 cursor-pointer d-flex flex-column justify-content-between" style={{height: "16rem"}}>
       <Card.Img
         variant="top"
-        src="https://placedog.net/200"
-        className="w-100 rounded-4 mb-2"
+        src={film.poster_url} 
+        className=" w-100 h-100 rounded-4 mb-2"
       />
-      <div className="d-flex justify-content-between align-items-center p-1">
-        <Card.Title className="fs-6 m-0 p-0 text-secondary fw-bold">
-          {film.titolo}
-        </Card.Title>
-        <i className="bi bi-play-circle-fill text-secondary"></i>
-      </div>
     </Card>
   );
 };

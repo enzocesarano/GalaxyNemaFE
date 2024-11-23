@@ -1,7 +1,8 @@
-import { FILMS } from "../actions";
+import { FILMS, PROIEZIONI } from "../actions";
 
 const initialState = {
   films: [],
+  proiezioni: [],
 }
 
 const films = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const films = (state = initialState, action) => {
         return {
           ...state,
           films: action.payload,
+        };
+        case PROIEZIONI:
+        return {
+          ...state,
+          proiezioni: action.payload,
         };
     default:
       return state;

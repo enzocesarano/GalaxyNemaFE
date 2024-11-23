@@ -2,6 +2,7 @@
 export const LOGIN = "LOGIN"
 export const SET_REGISTRAZIONE_ERRORS = "SET_REGISTRAZIONE_ERRORS"
 export const FILMS = "FILMS"
+export const PROIEZIONI = "PROIEZIONI"
 
 export const register = (data) => {
   return fetch("http://localhost:3001/auth/register", {
@@ -87,7 +88,7 @@ export const register = (data) => {
 
   export const filmsArray = () => {
     return (dispatch) => {
-      fetch("http://localhost:3001/films", {
+      fetch("http://localhost:3001/films?size=30", {
       })
         .then((response) => {
           if (response.ok) {
@@ -108,3 +109,29 @@ export const register = (data) => {
         });
     };
   };
+
+
+  export const proiezioniArray = () => {
+    return (dispatch) => {
+      fetch("http://localhost:3001/proiezioni", {
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("Errore nel recupero dei dati");
+          }
+        })
+        .then((data) => {
+          console.log("Dati ricevuti dall'API:", data); 
+          dispatch({
+            type: PROIEZIONI,
+            payload: data,
+          });
+        })
+        .catch((err) => {
+          console.log("Errore nel recupero dei dati:", err);
+        });
+    };
+  };
+

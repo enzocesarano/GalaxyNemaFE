@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "react-multi-carousel/lib/styles.css";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MyHome from "./components/MyHome";
@@ -11,7 +12,8 @@ import MyProfNav from "./components/MyProfNav";
 import MyDaily from "./components/MyDaily";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { filmsArray, meLogin } from "./redux/actions";
+import { filmsArray, meLogin, proiezioniArray } from "./redux/actions";
+
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -27,6 +29,7 @@ function App() {
     }
 
     dispatch(filmsArray())
+    dispatch(proiezioniArray())
   }, []);
 
   const handleLoginSuccess = () => {
