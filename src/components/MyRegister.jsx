@@ -179,7 +179,7 @@ const MyRegister = () => {
               name="data_nascita"
               value={formData.data_nascita}
               onChange={handleInputChange}
-              className={`rounded-4 px-4 py-2 text-secondary bg-black border-0 mb-2 ${
+              className={`rounded-4 px-4 py-2 text-secondary placeholder-light bg-black border-0 mb-2 ${
                 errors.data_nascita ? "is-invalid" : ""
               }`}
             />

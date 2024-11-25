@@ -48,7 +48,7 @@ const MyHome = () => {
   };
   return (
     <Col className="col-6 px-3 h-100 overflow-card">
-      <MySearch />
+      
 
       <Carousel
         responsive={responsive2}
@@ -64,6 +64,8 @@ const MyHome = () => {
               <MyHero key={index} film={film} />
             ))}
       </Carousel>
+
+      <MySearch />
       <Row>
         <Col>
           <Carousel

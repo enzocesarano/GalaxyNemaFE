@@ -13,9 +13,10 @@ const MyHero = ({ film, isLoading }) => {
   }
 
   const renderStars = (vote) => {
+    const vote2 = (vote/2)
     const starArray = [];
     for (let i = 0; i < 5; i++) {
-      if (i < vote/2) {
+      if (i < vote2) {
         starArray.push(
           <i key={i} className="bi bi-star-fill text-warning fs-supersmall me-1"></i>
         );
@@ -45,10 +46,7 @@ const MyHero = ({ film, isLoading }) => {
                 : film.titolo}</p>
             <p className="text-light fs-supersmall m-0">{film.genere}</p>
             <div className="d-flex align-items-center mt-2">
-              {renderStars(film.vote_average)}
-              <span className="text-light fs-small ms-2 me-3 fs-supersmall">
-                {film.vote_average.toFixed(1)}
-              </span>
+              {renderStars(film.voteAverage)}
             </div>
           </div>
           <div className="w-75">

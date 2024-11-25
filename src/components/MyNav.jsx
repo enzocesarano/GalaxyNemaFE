@@ -28,7 +28,7 @@ const MyNav = () => {
           <i className="bi bi-house-fill me-2"></i>Home
         </Link>
         <Link
-          to="/movies"
+          to="/film"
           className={`nav-link fw-bold w-100 p-2 px-3 rounded-4 ${
             isActive("/movies") ? "active text-white" : "text-secondary"
           }`}

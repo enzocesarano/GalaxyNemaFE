@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "react-multi-carousel/lib/styles.css";
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import MyHome from "./components/MyHome";
 import MyRegister from "./components/MyRegister";
 import { Col, Container, Row } from "react-bootstrap";
@@ -13,6 +13,7 @@ import MyDaily from "./components/MyDaily";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { filmsArray, meLogin, proiezioniArray } from "./redux/actions";
+import MyFilmSingle from "./components/MyFilmSingle";
 
 
 function App() {
@@ -41,9 +42,12 @@ function App() {
     setIsAuthenticated(false);
   };
 
+  const location = useLocation();
+  const pathFilm = "/film";
+
   return (
-    <BrowserRouter>
-      <Container fluid className="vh-100 p-5 bg-black overflow-hidden">
+    
+      <Container fluid className="vh-100 p-5 bg-black">
         <Row className="bg-dark h-100 rounded-5 p-4">
           <Col className="col-2 pe-5 d-flex flex-column justify-content-between">
             <MyNav />
@@ -53,13 +57,13 @@ function App() {
           <Routes>
             <Route path="/" element={<MyHome />} />
             {!isAuthenticated && <Route path="/register" element={<MyRegister />} />}
+            <Route path="/film" element={<MyFilmSingle />} />
           </Routes>
           <Col className="col-4 ps-5 d-flex flex-column justify-content-between">
-            <MyDaily />
+          {location.pathname !== pathFilm && <MyDaily />}
           </Col>
         </Row>
       </Container>
-    </BrowserRouter>
   );
 }
 

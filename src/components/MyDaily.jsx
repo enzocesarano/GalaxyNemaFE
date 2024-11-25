@@ -6,11 +6,11 @@ import { useSelector } from "react-redux";
 const MyDaily = () => {
   const [checkedSeats, setCheckedSeats] = useState([]);
 
-  const proiezioni = useSelector((store) => store.proiezioni.proiezioni);
-  if (!proiezioni || !proiezioni.content || !proiezioni.content[1]) {
+  const films = useSelector((store) => store.films.films);
+  if (!films || !films.content || !films.content[0]) {
     return <p>Caricamento in corso...</p>;
   }
-  const occupiedSeats = proiezioni.content[1].ticketList.map((ticket) => {
+  const occupiedSeats = films.content[0].proiezioneList[0].ticketList.map((ticket) => {
     const fila = ticket.postoASedere.fila;
     const numeroPosto = ticket.postoASedere.numeroPosto;
     return `${fila} ${numeroPosto}`;
@@ -63,6 +63,23 @@ const MyDaily = () => {
     );
   });
 
+  const renderStars = (vote) => {
+    const vote2 = (vote/2)
+    const starArray = [];
+    for (let i = 0; i < 5; i++) {
+      if (i < vote2) {
+        starArray.push(
+          <i key={i} className="bi bi-star-fill text-warning fs-supersmall me-1"></i>
+        );
+      } else {
+        starArray.push(
+          <i key={i} className="bi bi-star text-warning fs-supersmall me-1"></i>
+        );
+      }
+    }
+    return starArray;
+  };
+
   const numberOfTickets = checkedSeats.length;
 
   return (
@@ -72,33 +89,33 @@ const MyDaily = () => {
           <Card className="border-0 bg-transparent flex-row mb-4">
             <div >
               <div className="rounded-4 border sala p-3 text-secondary">
-                <p className="text-center fw-bold m-0 p-0 fs-5">
-                  {proiezioni.content[1].sala.nome}
+                <p className="text-center fw-bold m-0 p-0 fs-5 pb-1 mb-1 border-bottom border-secondary ">
+                  {films.content[0].proiezioneList[0].sala.nome}
                 </p>
-                <p className="text-center m-0 fw-bold">
-                  {dayjs(proiezioni.content[1].oraInizio).format("DD-MM")}
+                <p className="text-end m-0 fs-5 fw-bold">
+                  {dayjs(films.content[0].proiezioneList[0].oraInizio).format("HH:mm")}
                 </p>
-                <p className="text-center m-0 fs-small fw-bold">
-                  {dayjs(proiezioni.content[1].oraInizio).format("HH:mm")}
+                <p className="text-end m-0 fs-small fw-bold">
+                  {dayjs(films.content[0].proiezioneList[0].oraInizio).format("DD-MM")}
                 </p>
               </div>
             </div>
-            <Card.Body className="text-secondary m-0 p-0 flex-column justify-content-between text-end me-3">
+            <Card.Body className="text-secondary m-0 p-0 flex-column justify-content-between text-end me-4">
               <div>
-                <p className="fs-4 m-0 p-0">
-                  {proiezioni.content[1].film.titolo}
+                <p className="fs-5 m-0 p-0">
+                  {films.content[0].titolo}
                 </p>
-                <p className="mb-3">{proiezioni.content[1].film.genere}</p>
+                <p className="mb-1 fs-small">{films.content[0].genere}</p>
               </div>
               <p className="p-0 m-0">
-                {proiezioni.content[1].film.vote_average}
+                {renderStars(films.content[0].voteAverage)}
               </p>
             </Card.Body>
             <div className="w-25 ">
               <Card.Img
                 variant="top"
                 className="rounded-4 w-100"
-                src={proiezioni.content[1].film.poster_url}
+                src={films.content[0].poster_url}
               />
             </div>
           </Card>

@@ -86,10 +86,17 @@ export const register = (data) => {
   };
   
 
-  export const filmsArray = () => {
+  export const filmsArray = (filters = {}) => {
     return (dispatch) => {
-      fetch("http://localhost:3001/films?size=30", {
-      })
+      const url =
+        "http://localhost:3001/films/filters?" +
+        Object.entries(filters)
+          .map(
+            ([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+          )
+          .join("&");
+  
+      fetch(url, { method: "GET" })
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -98,7 +105,7 @@ export const register = (data) => {
           }
         })
         .then((data) => {
-          console.log("Dati ricevuti dall'API:", data); 
+          console.log("Dati ricevuti dall'API:", data);
           dispatch({
             type: FILMS,
             payload: data,
@@ -109,6 +116,7 @@ export const register = (data) => {
         });
     };
   };
+  
 
 
   export const proiezioniArray = () => {

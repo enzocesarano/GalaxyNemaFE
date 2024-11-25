@@ -195,3 +195,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 
+.backdropFilmSingle{
+  filter: brightness(0.3);
+}
+
+.w-18 {
+  width: 18% !important;
+}
+
