@@ -7,7 +7,6 @@ const MySearch = () => {
   const [filters, setFilters] = useState({
     titolo: "",
     genere: "",
-
     minVoteAverage: "",
     maxVoteAverage: "",
     sortBy: "",
@@ -19,6 +18,16 @@ const MySearch = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    if (name === "proiezioneAfter" || name == "proiezioneBefore") {
+      const selectedDate = new Date(value);
+      const currentDate = new Date();
+      if (selectedDate < currentDate) {
+        alert("La data di proiezione non può essere nel passato.");
+        e.target.value = "";
+        return;
+      }
+    }
+  
     setFilters((prevFilters) => ({
       ...prevFilters,
       [name]: value,
@@ -56,7 +65,7 @@ const MySearch = () => {
           <option value="dataUscita">Data di Uscita</option>
         </Form.Select>
       </div>
-      
+
       <div className="d-flex gap-2">
         <Form.Select
           name="genere"

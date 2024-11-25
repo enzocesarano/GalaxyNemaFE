@@ -6,7 +6,8 @@ import MySearch from "./MySearch";
 import Carousel from "react-multi-carousel";
 
 const MyHome = () => {
-  const films = useSelector((state) => state.films.films);
+  const films = useSelector((state) => state.proiezioni.proiezioni);
+  const senzaproiezioni = useSelector((state) => state.senzaproiezioni.senzaproiezioni);
   const isLoading = films.length === 0;
 
   const responsive = {
@@ -46,10 +47,10 @@ const MyHome = () => {
       items: 1,
     },
   };
+  
   return (
     <Col className="col-6 px-3 h-100 overflow-card">
-      
-
+      <div className="position-relative">
       <Carousel
         responsive={responsive2}
         infinite={true}
@@ -60,11 +61,15 @@ const MyHome = () => {
           ? Array.from({ length: 1 }).map((_, index) => (
               <MyHero key={index} isLoading={true} />
             ))
-          : (films.content || []).map((film, index) => (
-              <MyHero key={index} film={film} />
+          : (senzaproiezioni.content || []).map((senzaproiezioni, index) => (
+              <MyHero key={index} senzaproiezioni={senzaproiezioni} />
             ))}
       </Carousel>
-
+      <div className="w-100 position-absolute prossimamente translate-middle text-center border-1 fw-bold">
+      <p>COMING SOON</p>
+    </div>
+      </div>
+      
       <MySearch />
       <Row>
         <Col>

@@ -6,11 +6,11 @@ import { useSelector } from "react-redux";
 const MyDaily = () => {
   const [checkedSeats, setCheckedSeats] = useState([]);
 
-  const films = useSelector((store) => store.films.films);
-  if (!films || !films.content || !films.content[0]) {
+  const proiezioni = useSelector((store) => store.proiezioni.proiezioni);
+  if (!proiezioni || !proiezioni.content || !proiezioni.content[0]) {
     return <p>Caricamento in corso...</p>;
   }
-  const occupiedSeats = films.content[0].proiezioneList[0].ticketList.map((ticket) => {
+  const occupiedSeats = proiezioni.content[0].proiezioneList[0].ticketList.map((ticket) => {
     const fila = ticket.postoASedere.fila;
     const numeroPosto = ticket.postoASedere.numeroPosto;
     return `${fila} ${numeroPosto}`;
@@ -90,32 +90,32 @@ const MyDaily = () => {
             <div >
               <div className="rounded-4 border sala p-3 text-secondary">
                 <p className="text-center fw-bold m-0 p-0 fs-5 pb-1 mb-1 border-bottom border-secondary ">
-                  {films.content[0].proiezioneList[0].sala.nome}
+                  {proiezioni.content[0].proiezioneList[0].sala.nome}
                 </p>
                 <p className="text-end m-0 fs-5 fw-bold">
-                  {dayjs(films.content[0].proiezioneList[0].oraInizio).format("HH:mm")}
+                  {dayjs(proiezioni.content[0].proiezioneList[0].oraInizio).format("HH:mm")}
                 </p>
                 <p className="text-end m-0 fs-small fw-bold">
-                  {dayjs(films.content[0].proiezioneList[0].oraInizio).format("DD-MM")}
+                  {dayjs(proiezioni.content[0].proiezioneList[0].oraInizio).format("DD-MM")}
                 </p>
               </div>
             </div>
             <Card.Body className="text-secondary m-0 p-0 flex-column justify-content-between text-end me-4">
               <div>
                 <p className="fs-5 m-0 p-0">
-                  {films.content[0].titolo}
+                  {proiezioni.content[0].titolo}
                 </p>
-                <p className="mb-1 fs-small">{films.content[0].genere}</p>
+                <p className="mb-1 fs-small">{proiezioni.content[0].genere}</p>
               </div>
               <p className="p-0 m-0">
-                {renderStars(films.content[0].voteAverage)}
+                {renderStars(proiezioni.content[0].voteAverage)}
               </p>
             </Card.Body>
             <div className="w-25 ">
               <Card.Img
                 variant="top"
                 className="rounded-4 w-100"
-                src={films.content[0].poster_url}
+                src={proiezioni.content[0].poster_url}
               />
             </div>
           </Card>

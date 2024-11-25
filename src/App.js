@@ -12,7 +12,7 @@ import MyProfNav from "./components/MyProfNav";
 import MyDaily from "./components/MyDaily";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { filmsArray, meLogin, proiezioniArray } from "./redux/actions";
+import { filmsArray, filmsWhitoutProiezioni, meLogin, proiezioniArray } from "./redux/actions";
 import MyFilmSingle from "./components/MyFilmSingle";
 
 
@@ -30,7 +30,7 @@ function App() {
     }
 
     dispatch(filmsArray())
-    dispatch(proiezioniArray())
+    dispatch(filmsWhitoutProiezioni())
   }, []);
 
   const handleLoginSuccess = () => {

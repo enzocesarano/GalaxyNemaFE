@@ -1,6 +1,6 @@
 import { Image, Spinner } from "react-bootstrap";
 
-const MyHero = ({ film, isLoading }) => {
+const MyHero = ({ senzaproiezioni, isLoading }) => {
   if (isLoading) {
     return (
       <div
@@ -31,29 +31,30 @@ const MyHero = ({ film, isLoading }) => {
 
   return (
     <div className="mb-4  cursor-pointer border border-black hero-hover rounded-4 position-relative">
-      <Image src={film.backdrop_url} className="rounded-4 w-100 hero" />
+      <Image src={senzaproiezioni.backdrop_url} className="rounded-4 w-100 hero" />
+
       <div className="position-absolute w-100 h-100 p-5 icon-wrapper d-flex align-items-end">
         <div className="d-flex px-5">
           <div className="w-25 me-3">
             <Image
-              src={film.poster_url}
+              src={senzaproiezioni.poster_url}
               className="image-topHero w-100 rounded-4"
             />
           </div>
           <div className="me-3 border-end flex-grow-0 flex-shrink-0">
-            <p className="text-light fs-5 m-0 mb-1 me-3">{film.titolo.length > 25
-                ? film.titolo.substring(0, 25) + "..."
-                : film.titolo}</p>
-            <p className="text-light fs-supersmall m-0">{film.genere}</p>
-            <div className="d-flex align-items-center mt-2">
-              {renderStars(film.voteAverage)}
+            <p className="text-light fs-5 m-0 mb-1 me-3">{senzaproiezioni.titolo.length > 25
+                ? senzaproiezioni.titolo.substring(0, 25) + "..."
+                : senzaproiezioni.titolo}</p>
+            <p className="text-light fs-supersmall m-0">{senzaproiezioni.genere}</p>
+            <div className="d-flex align-items-center mt-2 me-3">
+              {renderStars(senzaproiezioni.voteAverage)}
             </div>
           </div>
           <div className="w-75">
             <p className="text-light fs-small m-0">
-              {film.descrizione.length > 400
-                ? film.descrizione.substring(0, 400) + "..."
-                : film.descrizione}
+              {senzaproiezioni.descrizione.length > 400
+                ? senzaproiezioni.descrizione.substring(0, 400) + "..."
+                : senzaproiezioni.descrizione}
             </p>
           </div>
         </div>

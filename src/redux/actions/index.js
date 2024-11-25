@@ -3,6 +3,7 @@ export const LOGIN = "LOGIN"
 export const SET_REGISTRAZIONE_ERRORS = "SET_REGISTRAZIONE_ERRORS"
 export const FILMS = "FILMS"
 export const PROIEZIONI = "PROIEZIONI"
+export const SENZA_PROIEZIONI = "SENZA_PROIEZIONI"
 
 export const register = (data) => {
   return fetch("http://localhost:3001/auth/register", {
@@ -107,32 +108,6 @@ export const register = (data) => {
         .then((data) => {
           console.log("Dati ricevuti dall'API:", data);
           dispatch({
-            type: FILMS,
-            payload: data,
-          });
-        })
-        .catch((err) => {
-          console.log("Errore nel recupero dei dati:", err);
-        });
-    };
-  };
-  
-
-
-  export const proiezioniArray = () => {
-    return (dispatch) => {
-      fetch("http://localhost:3001/proiezioni", {
-      })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error("Errore nel recupero dei dati");
-          }
-        })
-        .then((data) => {
-          console.log("Dati ricevuti dall'API:", data); 
-          dispatch({
             type: PROIEZIONI,
             payload: data,
           });
@@ -142,4 +117,33 @@ export const register = (data) => {
         });
     };
   };
+
+  export const filmsWhitoutProiezioni = () => {
+    return (dispatch) => {
+    
+  
+      fetch("http://localhost:3001/films/senzaproiezioni", {
+
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("Errore nel recupero dei dati");
+          }
+        })
+        .then((data) => {
+          console.log("film senza proiezioni", data);
+          dispatch({
+            type: SENZA_PROIEZIONI,
+            payload: data,
+          });
+        })
+        .catch((err) => {
+          console.log("Errore nel recupero dei dati:", err);
+        });
+    };
+  };
+  
+  
 
