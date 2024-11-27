@@ -6,10 +6,16 @@ export const PROIEZIONI = "PROIEZIONI"
 export const SENZA_PROIEZIONI = "SENZA_PROIEZIONI"
 export const SELECT_TICKET = "SELECT_TICKET";
 export const NEWS = "NEWS"
+export const SELECT_PROIEZIONE = "SELECT_PROIEZIONE"
 
 export const selectTicket = (tickets) => ({
   type: SELECT_TICKET,
   payload: tickets,
+});
+
+export const selectProiezioneAction = (proiezione) => ({
+  type: SELECT_PROIEZIONE,
+  payload: proiezione,
 });
 
 export const register = (data) => {

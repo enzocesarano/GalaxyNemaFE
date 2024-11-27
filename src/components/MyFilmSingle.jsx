@@ -1,16 +1,22 @@
 import dayjs from "dayjs";
 import { Col, Image } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyDaily from "./MyDaily";
+import { selectProiezioneAction } from "../redux/actions";
 
 const MyFilmSingle = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
   const proiezioni = useSelector((store) => store.proiezioni.proiezioni);
 
   const film = proiezioni.content ? proiezioni.content.find((film) => film.id_film === id) : null;
-  const [selectedProiezione, setSelectedProiezione] = useState(film.proiezioneList[0]);
+  const [selectedProiezione, setSelectedProiezione] = useState(film?.proiezioneList[0]);
+
+  useEffect(() => {
+    dispatch(selectProiezioneAction(selectedProiezione))
+  }, [selectedProiezione, dispatch])
 
   if (!film) {
     return (

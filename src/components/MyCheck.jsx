@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const MyCheck = () => {
+
   const selectedTickets = useSelector(
-    (state) => state.selectedTickets.selectedTickets
+    (store) => store.selectedTickets.selectedTickets
   );
+
+  const selectedProiezione = useSelector((store) => store.selectedProiezione.selectedProiezione)
+
+  useEffect(() => {
+    console.log(selectedProiezione)
+  }, [selectedProiezione])
 
 
   const [invoiceData, setInvoiceData] = useState({
