@@ -73,6 +73,10 @@
   filter: brightness(0.3);
 }
 
+.heroSingleFilm {
+  filter: brightness(0.3);
+}
+
 .prossimamente {
   top: 20%;
   left: 50%;

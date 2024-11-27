@@ -1,4 +1,5 @@
-import { Card, Placeholder} from "react-bootstrap";
+import { Card, Placeholder } from "react-bootstrap";
+import { Link } from "react-router-dom"; // Importa Link
 
 const MyCards = ({ film, isLoading }) => {
   if (isLoading) {
@@ -25,13 +26,15 @@ const MyCards = ({ film, isLoading }) => {
   }
 
   return (
-    <Card className="cards w-100 rounded-4 bg-transparent border-dark p-2 cursor-pointer d-flex flex-column justify-content-between" style={{height: "16rem"}}>
-      <Card.Img
-        variant="top"
-        src={film.poster_url} 
-        className=" w-100 h-100 rounded-4 mb-2"
-      />
-    </Card>
+    <Link to={`/film/${film.id_film}`} className="text-decoration-none">
+      <Card className="cards w-100 rounded-4 bg-transparent border-dark p-2 cursor-pointer d-flex flex-column justify-content-between" style={{ height: "16rem" }}>
+        <Card.Img
+          variant="top"
+          src={film.poster_url} 
+          className=" w-100 h-100 rounded-4 mb-2"
+        />
+      </Card>
+    </Link>
   );
 };
 

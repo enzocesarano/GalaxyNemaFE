@@ -12,9 +12,15 @@ import MyProfNav from "./components/MyProfNav";
 import MyDaily from "./components/MyDaily";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { filmsArray, filmsWhitoutProiezioni, meLogin, proiezioniArray } from "./redux/actions";
+import {
+  filmsArray,
+  filmsWhitoutProiezioni,
+  meLogin,
+  newsCinema,
+} from "./redux/actions";
 import MyFilmSingle from "./components/MyFilmSingle";
-
+import MyCheck from "./components/MyCheck";
+import MyNews from "./components/MyNews";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -31,6 +37,8 @@ function App() {
 
     dispatch(filmsArray())
     dispatch(filmsWhitoutProiezioni())
+    dispatch(newsCinema())
+    
   }, []);
 
   const handleLoginSuccess = () => {
@@ -38,32 +46,34 @@ function App() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); 
+    localStorage.removeItem("token");
     setIsAuthenticated(false);
   };
 
   const location = useLocation();
-  const pathFilm = "/film";
 
   return (
-    
-      <Container fluid className="vh-100 p-5 bg-black">
-        <Row className="bg-dark h-100 rounded-5 p-4">
-          <Col className="col-2 pe-5 d-flex flex-column justify-content-between">
-            <MyNav />
-            {!isAuthenticated && <MyLogin onLoginSuccess={handleLoginSuccess} />}
-            {isAuthenticated && <MyProfNav onLogout={handleLogout} />}
-          </Col>
-          <Routes>
-            <Route path="/" element={<MyHome />} />
-            {!isAuthenticated && <Route path="/register" element={<MyRegister />} />}
-            <Route path="/film" element={<MyFilmSingle />} />
-          </Routes>
-          <Col className="col-4 ps-5 d-flex flex-column justify-content-between">
-          {location.pathname !== pathFilm && <MyDaily />}
-          </Col>
-        </Row>
-      </Container>
+    <Container fluid className="vh-100 p-5 bg-black">
+      <Row className="bg-dark h-100 rounded-5 p-4">
+        <Col className="col-2 pe-5 d-flex flex-column justify-content-between">
+          <MyNav />
+          {!isAuthenticated && <MyLogin onLoginSuccess={handleLoginSuccess} />}
+          {isAuthenticated && <MyProfNav onLogout={handleLogout} />}
+        </Col>
+        <Routes>
+          <Route path="/" element={<MyHome />} />
+          {!isAuthenticated && (
+            <Route path="/register" element={<MyRegister />} />
+          )}
+          <Route path="/film/:id" element={<MyFilmSingle />} />
+          <Route path="/checkout" element={<MyCheck />} />
+        </Routes>
+          {!(
+            location.pathname.includes("/film/") ||
+            location.pathname.includes("/checkout")
+          ) && <Col className="col-4 ps-5 d-flex flex-column justify-content-between h-100 overflow-card"><MyNews /></Col>}
+      </Row>
+    </Container>
   );
 }
 

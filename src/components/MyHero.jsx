@@ -30,7 +30,7 @@ const MyHero = ({ senzaproiezioni, isLoading }) => {
   };
 
   return (
-    <div className="mb-4  cursor-pointer border border-black hero-hover rounded-4 position-relative">
+    <div className="mb-4 rounded-4  cursor-pointer border border-dark hero-hover position-relative">
       <Image src={senzaproiezioni.backdrop_url} className="rounded-4 w-100 hero" />
 
       <div className="position-absolute w-100 h-100 p-5 icon-wrapper d-flex align-items-end">

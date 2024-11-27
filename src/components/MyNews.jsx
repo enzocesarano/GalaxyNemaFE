@@ -1,30 +1,57 @@
-import { Card } from "react-bootstrap"
-
+import { Card } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 const MyNews = () => {
+  const news = useSelector((store) => store.news.news);
 
-    return(
-        <Card className="border-0 bg-transparent flex-row mb-4">
-            <div className="w-50 me-4">
-              <Card.Img
-                variant="top"
-                className="rounded-4 w-100"
-                src="https://www.thespacecinema.it/-/media/tsc/2024/11/wicked/new-new/locandina_wicked.jpg?w=200"
-              />
-            </div>
+  const filterArticlesWithAuthor = (articles) => {
+    return articles.filter((article) => article.author && article.author.trim() !== "");
+  };
 
-            <Card.Body className="text-secondary m-0 p-0 flex-column justify-content-between">
-              <div>
-                <p className="fs-4 m-0 p-0">WHICKED </p>
-                <p className="mb-3">Genere</p>
+  const articlesWithAuthor = news.articles ? filterArticlesWithAuthor(news.articles) : [];
+
+  return (
+    <div>
+      {articlesWithAuthor.length > 0 ? (
+        articlesWithAuthor.map((article, index) => (
+          <a
+            href={article.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            key={index}
+            className="text-decoration-none text-reset"
+          >
+            <Card className="border-0 rounded-0 pb-3 mb-3 border-bottom border-black bg-transparent flex-row">
+              <div className="w-50 me-3">
+                {article.urlToImage && (
+                  <Card.Img
+                    variant="top"
+                    className="rounded-4 w-100"
+                    src={article.urlToImage}
+                    alt={article.title}
+                  />
+                )}
               </div>
-              <p className="p-0 m-0">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Saepe
-                eum aperiam reprehenderit ullam eveniet maiores odio...
-              </p>
-            </Card.Body>
-          </Card>
-    )
-}
 
-export default MyNews
+              <Card.Body className="text-secondary w-75 m-0 p-0 flex-column justify-content-between">
+                <div>
+                  <p className="fs-6 m-0 p-0 mb-1 fw-bold">{article.title}</p>
+                  <p className="mb-2 fs-supersmall">
+                    {article.author} - {new Date(article.publishedAt).toLocaleDateString()}
+                  </p>
+                </div>
+                <p className="p-0 m-0 fs-supersmall">
+                  {article.description || "Lorem ipsum, dolor sit amet consectetur..."}
+                </p>
+              </Card.Body>
+            </Card>
+          </a>
+        ))
+      ) : (
+        <p>No news available</p>
+      )}
+    </div>
+  );
+};
+
+export default MyNews;

@@ -7,6 +7,7 @@ import Carousel from "react-multi-carousel";
 
 const MyHome = () => {
   const films = useSelector((state) => state.proiezioni.proiezioni);
+  
   const senzaproiezioni = useSelector((state) => state.senzaproiezioni.senzaproiezioni);
   const isLoading = films.length === 0;
 

@@ -4,6 +4,13 @@ export const SET_REGISTRAZIONE_ERRORS = "SET_REGISTRAZIONE_ERRORS"
 export const FILMS = "FILMS"
 export const PROIEZIONI = "PROIEZIONI"
 export const SENZA_PROIEZIONI = "SENZA_PROIEZIONI"
+export const SELECT_TICKET = "SELECT_TICKET";
+export const NEWS = "NEWS"
+
+export const selectTicket = (tickets) => ({
+  type: SELECT_TICKET,
+  payload: tickets,
+});
 
 export const register = (data) => {
   return fetch("http://localhost:3001/auth/register", {
@@ -136,6 +143,31 @@ export const register = (data) => {
           console.log("film senza proiezioni", data);
           dispatch({
             type: SENZA_PROIEZIONI,
+            payload: data,
+          });
+        })
+        .catch((err) => {
+          console.log("Errore nel recupero dei dati:", err);
+        });
+    };
+  };
+
+  export const newsCinema = () => {
+    return (dispatch) => {
+      fetch("http://localhost:3001/films/news", {
+
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("Errore nel recupero dei dati");
+          }
+        })
+        .then((data) => {
+          console.log("news: ", data);
+          dispatch({
+            type: NEWS,
             payload: data,
           });
         })
