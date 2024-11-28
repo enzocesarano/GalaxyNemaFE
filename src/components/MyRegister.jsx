@@ -77,7 +77,6 @@ const MyRegister = () => {
           navigate("/");
         }, 1500);
       } catch (error) {
-        console.error("Errore durante la registrazione:", error);
         setGeneralError(error.message);
       }
     }

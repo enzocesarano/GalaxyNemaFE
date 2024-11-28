@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Col, Form, Row, Button, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { filmsArray, postInvoice } from "../redux/actions";
@@ -7,8 +7,14 @@ import { useNavigate } from "react-router-dom";
 const MyCheck = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const selectedTickets = useSelector((store) => store.selectedTickets.selectedTickets);
-  const selectedProiezione = useSelector((store) => store.selectedProiezione.selectedProiezione);
+  
+  const selectedProiezione = useSelector(
+    (store) => store.selectedProiezione.selectedProiezione
+  );
+
+  const selectedTickets = JSON.parse(
+    localStorage.getItem(`selectedTickets_${selectedProiezione.id_proiezione}`)
+  ) || [];
 
   const [invoiceData, setInvoiceData] = useState({
     via: "",
@@ -18,14 +24,44 @@ const MyCheck = () => {
     provincia: "",
   });
 
+  const basePrice = 5.0;
+  const premiumIncrement = 3.0;
+  const priceMultiplier = selectedProiezione.moltiplicatore_prezzo;
+
+  const calculatePrice = (rowLetter) =>
+    rowLetter === "D"
+      ? (basePrice + premiumIncrement) * priceMultiplier
+      : basePrice * priceMultiplier;
+
   const [ticketData, setTicketData] = useState(
-    selectedTickets.map((ticket) => ({
+    selectedTickets.map((seat) => ({
       nome: "",
       cognome: "",
       data_nascita: "",
-      postoASedere: ticket,
+      postoASedere: seat,
+      prezzo: calculatePrice(seat.split(" ")[0]),
     }))
   );
+
+  const totalAmount = ticketData.reduce(
+    (sum, ticket) => sum + ticket.prezzo,
+    0
+  );
+
+  const [errors, setErrors] = useState({
+    ticketErrors: selectedTickets.map(() => ({
+      nome: "",
+      cognome: "",
+      data_nascita: "",
+    })),
+    invoiceErrors: {
+      via: "",
+      civico: "",
+      cap: "",
+      comune: "",
+      provincia: "",
+    },
+  });
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -43,7 +79,69 @@ const MyCheck = () => {
     setTicketData(updatedTickets);
   };
 
+  const validateForm = () => {
+    let valid = true;
+    let newErrors = {
+      ticketErrors: ticketData.map(() => ({
+        nome: "",
+        cognome: "",
+        data_nascita: "",
+      })),
+      invoiceErrors: {
+        via: "",
+        civico: "",
+        cap: "",
+        comune: "",
+        provincia: "",
+      },
+    };
+
+    ticketData.forEach((ticket, index) => {
+      if (!ticket.nome.trim()) {
+        newErrors.ticketErrors[index].nome = "Il nome è obbligatorio.";
+        valid = false;
+      }
+      if (!ticket.cognome.trim()) {
+        newErrors.ticketErrors[index].cognome = "Il cognome è obbligatorio.";
+        valid = false;
+      }
+      if (!ticket.data_nascita) {
+        newErrors.ticketErrors[index].data_nascita =
+          "La data di nascita è obbligatoria.";
+        valid = false;
+      }
+    });
+
+    if (!invoiceData.via.trim()) {
+      newErrors.invoiceErrors.via = "La via è obbligatoria.";
+      valid = false;
+    }
+    if (!invoiceData.civico.trim()) {
+      newErrors.invoiceErrors.civico = "Il civico è obbligatorio.";
+      valid = false;
+    }
+    if (!invoiceData.cap.trim()) {
+      newErrors.invoiceErrors.cap = "Il CAP è obbligatorio.";
+      valid = false;
+    }
+    if (!invoiceData.comune.trim()) {
+      newErrors.invoiceErrors.comune = "Il comune è obbligatorio.";
+      valid = false;
+    }
+    if (!invoiceData.provincia.trim()) {
+      newErrors.invoiceErrors.provincia = "La provincia è obbligatoria.";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
   const handleSubmit = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
     setIsLoading(true);
     setErrorMessage(null);
     setSuccessMessage(null);
@@ -62,9 +160,12 @@ const MyCheck = () => {
     };
 
     try {
-      const response = await postInvoice(jsonData, selectedProiezione.id_proiezione);
+      const response = await postInvoice(
+        jsonData,
+        selectedProiezione.id_proiezione
+      );
       setSuccessMessage("Acquisto completato con successo!");
-      dispatch(filmsArray())
+      dispatch(filmsArray());
       setTimeout(() => {
         navigate("/");
       }, 1500);
@@ -77,136 +178,158 @@ const MyCheck = () => {
 
   return (
     <>
-      <Col className="col-5 h-100">
-        <h2 className="text-light mt-4">Dettagli dei Tickets</h2>
+      <Col className="col-3">
+        <h2 className="text-light">Dettagli dei Tickets</h2>
 
-        {/* Form per ogni Ticket */}
         {ticketData.map((ticket, index) => (
           <div key={index} className="mb-4">
             <h4 className="text-light">
-              Fila: {ticket.postoASedere.split(" ")[0]} - Posto: {ticket.postoASedere.split(" ")[1]}
+              Fila: {ticket.postoASedere.split(" ")[0]} - Posto:{" "}
+              {ticket.postoASedere.split(" ")[1]} - Prezzo: €{" "}
+              {ticket.prezzo.toFixed(2)}
             </h4>
-            <div className="d-flex">
-              <Form>
-                <Form.Group controlId={`formNomeTicket-${index}`}>
-                  <Form.Control
-                    type="text"
-                    placeholder="Inserisci il nome"
-                    name="nome"
-                    value={ticket.nome}
-                    onChange={(e) => handleTicketChange(index, e)}
-                    className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2`}
-                  />
-                </Form.Group>
-
-                <Form.Group controlId={`formCognomeTicket-${index}`}>
-                  <Form.Control
-                    type="text"
-                    placeholder="Inserisci il cognome"
-                    name="cognome"
-                    value={ticket.cognome}
-                    onChange={(e) => handleTicketChange(index, e)}
-                    className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2`}
-                  />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId={`formDataNascitaTicket-${index}`}>
-                  <Form.Control
-                    type="date"
-                    name="data_nascita"
-                    value={ticket.data_nascita}
-                    onChange={(e) => handleTicketChange(index, e)}
-                    className={`rounded-4 px-4 py-2 bg-black border-0 text-secondary placeholder-light mb-2`}
-                  />
-                </Form.Group>
-              </Form>
-            </div>
+            <Form>
+              <Form.Group>
+                <Form.Control
+                  type="text"
+                  placeholder="Nome"
+                  name="nome"
+                  value={ticket.nome}
+                  onChange={(e) => handleTicketChange(index, e)}
+                  className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2 ${
+                    errors.ticketErrors[index].nome ? "is-invalid" : ""
+                  }`}
+                />
+                <div className="invalid-feedback">
+                  {errors.ticketErrors[index].nome}
+                </div>
+              </Form.Group>
+              <Form.Group>
+                <Form.Control
+                  type="text"
+                  placeholder="Cognome"
+                  name="cognome"
+                  value={ticket.cognome}
+                  onChange={(e) => handleTicketChange(index, e)}
+                  className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2 ${
+                    errors.ticketErrors[index].cognome ? "is-invalid" : ""
+                  }`}
+                />
+                <div className="invalid-feedback">
+                  {errors.ticketErrors[index].cognome}
+                </div>
+              </Form.Group>
+              <Form.Group>
+                <Form.Control
+                  type="date"
+                  name="data_nascita"
+                  value={ticket.data_nascita}
+                  onChange={(e) => handleTicketChange(index, e)}
+                  className={`rounded-4 px-4 py-2 bg-black border-0 placeholder-light text-secondary ${
+                    errors.ticketErrors[index].data_nascita ? "is-invalid" : ""
+                  }`}
+                />
+                <div className="invalid-feedback">
+                  {errors.ticketErrors[index].data_nascita}
+                </div>
+              </Form.Group>
+            </Form>
           </div>
         ))}
-      </Col>
 
-      <Col>
-        <h2 className="text-secondary">DATI DI FATTURAZIONE</h2>
+        <h2 className="text-light">Totale: €{totalAmount.toFixed(2)}</h2>
 
-        {/* Form per Invoice */}
-        <Form>
-          <Row className="mb-3">
-            <Form.Group controlId="formVia">
-              <Form.Control
-                type="text"
-                placeholder="Inserisci la via"
-                name="via"
-                value={invoiceData.via}
-                onChange={handleInvoiceChange}
-                className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2`}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formCivico">
-              <Form.Control
-                type="text"
-                placeholder="Inserisci il civico"
-                name="civico"
-                value={invoiceData.civico}
-                onChange={handleInvoiceChange}
-                className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2`}
-              />
-            </Form.Group>
-          </Row>
-
-          <Row className="mb-3">
-            <Form.Group controlId="formCap">
-              <Form.Control
-                type="text"
-                placeholder="Inserisci il CAP"
-                name="cap"
-                value={invoiceData.cap}
-                onChange={handleInvoiceChange}
-                className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2`}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formComune">
-              <Form.Control
-                type="text"
-                placeholder="Inserisci il comune"
-                name="comune"
-                value={invoiceData.comune}
-                onChange={handleInvoiceChange}
-                className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2`}
-              />
-            </Form.Group>
-          </Row>
-
-          <Row className="mb-3">
-            <Form.Group controlId="formProvincia">
-              <Form.Control
-                type="text"
-                placeholder="Inserisci la provincia"
-                name="provincia"
-                value={invoiceData.provincia}
-                onChange={handleInvoiceChange}
-                className={`rounded-4 px-4 py-2 text-light bg-black border-0 placeholder-light mb-2`}
-              />
-            </Form.Group>
-          </Row>
-        </Form>
+        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+        {successMessage && <Alert variant="success">{successMessage}</Alert>}
 
         <Button
-          variant="primary"
-          className="mt-4"
           onClick={handleSubmit}
           disabled={isLoading}
+          className="btn btn-primary mt-4"
         >
-          {isLoading ? "Caricamento..." : "Invia Dati"}
+          {isLoading ? "Caricamento..." : "Acquista"}
         </Button>
+      </Col>
 
-        {/* Feedback messaggi */}
-        {errorMessage && <Alert variant="danger" className="mt-3">{errorMessage}</Alert>}
-        {successMessage && <Alert variant="success" className="mt-3">{successMessage}</Alert>}
-
-        <h2 className="text-secondary mt-4">JSON Generato</h2>
-        <pre className="text-secondary">{JSON.stringify({ ...invoiceData, ticket: ticketData }, null, 2)}</pre>
+      <Col className="col-3 mb-5">
+        <h2 className="text-light">Dati di Fatturazione</h2>
+        <Form>
+          <Form.Group className="mb-2">
+            <Form.Control
+              type="text"
+              placeholder="Via"
+              name="via"
+              value={invoiceData.via}
+              onChange={handleInvoiceChange}
+              className={`rounded-4 px-4 py-2 bg-black border-0 placeholder-light text-light ${
+                errors.invoiceErrors.via ? "is-invalid" : ""
+              }`}
+            />
+            <div className="invalid-feedback">
+              {errors.invoiceErrors.via}
+            </div>
+          </Form.Group>
+          <Form.Group className="mb-2">
+            <Form.Control
+              type="text"
+              placeholder="Civico"
+              name="civico"
+              value={invoiceData.civico}
+              onChange={handleInvoiceChange}
+              className={`rounded-4 px-4 py-2 bg-black border-0 placeholder-light text-light ${
+                errors.invoiceErrors.civico ? "is-invalid" : ""
+              }`}
+            />
+            <div className="invalid-feedback">
+              {errors.invoiceErrors.civico}
+            </div>
+          </Form.Group>
+          <Form.Group className="mb-2">
+            <Form.Control
+              type="text"
+              placeholder="CAP"
+              name="cap"
+              value={invoiceData.cap}
+              onChange={handleInvoiceChange}
+              className={`rounded-4 px-4 py-2 bg-black border-0 placeholder-light text-light ${
+                errors.invoiceErrors.cap ? "is-invalid" : ""
+              }`}
+            />
+            <div className="invalid-feedback">
+              {errors.invoiceErrors.cap}
+            </div>
+          </Form.Group>
+          <Form.Group className="mb-2">
+            <Form.Control
+              type="text"
+              placeholder="Comune"
+              name="comune"
+              value={invoiceData.comune}
+              onChange={handleInvoiceChange}
+              className={`rounded-4 px-4 py-2 bg-black border-0 placeholder-light text-light ${
+                errors.invoiceErrors.comune ? "is-invalid" : ""
+              }`}
+            />
+            <div className="invalid-feedback">
+              {errors.invoiceErrors.comune}
+            </div>
+          </Form.Group>
+          <Form.Group className="mb-2">
+            <Form.Control
+              type="text"
+              placeholder="Provincia"
+              name="provincia"
+              value={invoiceData.provincia}
+              onChange={handleInvoiceChange}
+              className={`rounded-4 px-4 py-2 bg-black border-0 placeholder-light text-light ${
+                errors.invoiceErrors.provincia ? "is-invalid" : ""
+              }`}
+            />
+            <div className="invalid-feedback">
+              {errors.invoiceErrors.provincia}
+            </div>
+          </Form.Group>
+        </Form>
       </Col>
     </>
   );

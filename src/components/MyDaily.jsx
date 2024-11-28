@@ -1,16 +1,31 @@
-import { useState, useEffect } from "react";
-import { Card } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { selectTicket } from "../redux/actions";
+import { Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const MyDaily = ({ proiezione }) => {
   const dispatch = useDispatch();
-  const [checkedSeats, setCheckedSeats] = useState([]);
+  const selectedTickets = useSelector((store) => store.selectedTickets.selectedTickets);
 
   useEffect(() => {
-    dispatch(selectTicket(checkedSeats));
-  }, [checkedSeats, dispatch]);
+    if (proiezione && proiezione.id_proiezione) {
+      const savedSeats = JSON.parse(localStorage.getItem(`selectedTickets_${proiezione.id_proiezione}`)) || [];
+      dispatch(selectTicket(savedSeats)); 
+    }
+  }, [proiezione, dispatch]);
+
+  const toggleSeat = (seat) => {
+    const savedSeats = JSON.parse(localStorage.getItem(`selectedTickets_${proiezione.id_proiezione}`)) || [];
+
+    const updatedSeats = savedSeats.includes(seat)
+      ? savedSeats.filter((s) => s !== seat)
+      : [...savedSeats, seat];
+
+    localStorage.setItem(`selectedTickets_${proiezione.id_proiezione}`, JSON.stringify(updatedSeats));
+
+    dispatch(selectTicket(updatedSeats));
+  };
 
   if (!proiezione) {
     return <p className="text-danger">Seleziona una proiezione per vedere i posti disponibili.</p>;
@@ -22,22 +37,29 @@ const MyDaily = ({ proiezione }) => {
     return `${fila} ${numeroPosto}`;
   });
 
-  const toggleSeat = (seat) => {
-    setCheckedSeats((prev) =>
-      prev.includes(seat) ? prev.filter((s) => s !== seat) : [...prev, seat]
-    );
-  };
-
   const rows = [];
   const rowLetters = ["A", "B", "C", "D", "E"];
+  const basePrice = 5.0;
+  const premiumIncrement = 3.0;
+  const priceMultiplier = proiezione.moltiplicatore_prezzo;
+
+  const calculatePrice = (rowLetter) =>
+    rowLetter === "D" ? (basePrice + premiumIncrement) * priceMultiplier : basePrice * priceMultiplier;
+
+  const selectedSeatPrices = selectedTickets.map((seat) => {
+    const rowLetter = seat.split(" ")[0];
+    return calculatePrice(rowLetter);
+  });
+
+  const totalPrice = selectedSeatPrices.reduce((sum, price) => sum + price, 0);
 
   rowLetters.forEach((rowLetter) => {
     const rowSeats = [];
-
     for (let seatIndex = 0; seatIndex < 10; seatIndex++) {
       const seatValue = `${rowLetter} P${seatIndex + 1}`;
-      const isRedSeat = seatValue.startsWith("D");
+      const isRedSeat = rowLetter === "D";
       const isOccupied = occupiedSeats.includes(seatValue);
+      const isChecked = selectedTickets.includes(seatValue);
 
       rowSeats.push(
         <label
@@ -46,14 +68,12 @@ const MyDaily = ({ proiezione }) => {
           aria-label={seatValue}
         >
           <input
-            className={`posto m-1 ms-0 me-2 ${isRedSeat ? "poltrona" : ""} ${
-              isOccupied ? "occupato" : ""
-            }`}
+            className={`posto m-1 ms-0 me-2 ${isRedSeat ? "poltrona" : ""} ${isOccupied ? "occupato" : ""}`}
             type="checkbox"
             value={seatValue}
-            checked={checkedSeats.includes(seatValue)}
+            checked={isChecked}
             disabled={isOccupied}
-            onChange={() => toggleSeat(seatValue)}
+            onChange={() => toggleSeat(seatValue)} 
           />
         </label>
       );
@@ -69,27 +89,23 @@ const MyDaily = ({ proiezione }) => {
     );
   });
 
-  const numberOfTickets = checkedSeats.length;
-
   return (
     <div className="mb-3">
       <Card className="bg-transparent border-0 px-4 mb-2 text-secondary">
         <div className="w-100 align-items-center p-1">
-          <div className="d-flex justify-content-between">
+          <div className="d-flex flex-column justify-content-between">
             <ol className="w-100 p-0 m-0">{rows}</ol>
-            <div className="d-flex flex-column justify-content-end">
+            <div className="d-flex flex-column align-items-center">
+              <div className="w-100 mb-2">
+                <p className="text-center fw-bold m-0 p-0">Totale: €{totalPrice.toFixed(2)}</p>
+              </div>
               <div className="mb-2">
                 <Link
-                  to={{
-                    pathname: "/checkout",
-                  }}
+                  to="/checkout"
                   className="btn botton-check border-0 rounded-4 text-black fw-bold"
                 >
                   Checkout
                 </Link>
-              </div>
-              <div>
-                <p className="text-center fw-bold">Ticket: {numberOfTickets}</p>
               </div>
             </div>
           </div>
