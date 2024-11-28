@@ -11,7 +11,7 @@ import MyLogin from "./components/MyLogin";
 import MyProfNav from "./components/MyProfNav";
 import MyDaily from "./components/MyDaily";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   filmsArray,
   filmsWhitoutProiezioni,

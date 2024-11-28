@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Col, Form, Row } from "react-bootstrap";
+import { Col, Form, Row, Button, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { filmsArray, postInvoice } from "../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 const MyCheck = () => {
-
-  const selectedTickets = useSelector(
-    (store) => store.selectedTickets.selectedTickets
-  );
-
-  const selectedProiezione = useSelector((store) => store.selectedProiezione.selectedProiezione)
-
-  useEffect(() => {
-    console.log(selectedProiezione)
-  }, [selectedProiezione])
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const selectedTickets = useSelector((store) => store.selectedTickets.selectedTickets);
+  const selectedProiezione = useSelector((store) => store.selectedProiezione.selectedProiezione);
 
   const [invoiceData, setInvoiceData] = useState({
     via: "",
@@ -23,7 +18,6 @@ const MyCheck = () => {
     provincia: "",
   });
 
-
   const [ticketData, setTicketData] = useState(
     selectedTickets.map((ticket) => ({
       nome: "",
@@ -32,6 +26,10 @@ const MyCheck = () => {
       postoASedere: ticket,
     }))
   );
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   const handleInvoiceChange = (e) => {
     const { name, value } = e.target;
@@ -45,17 +43,36 @@ const MyCheck = () => {
     setTicketData(updatedTickets);
   };
 
-  const jsonData = {
-    ...invoiceData,
-    ticket: ticketData.map((ticket, index) => ({
-      nome: ticket.nome,
-      cognome: ticket.cognome,
-      data_nascita: ticket.data_nascita,
-      postoASedere: {
-        fila: ticket.postoASedere.split(" ")[0],
-        numeroPosto: ticket.postoASedere.split(" ")[1],
-      },
-    })),
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    setErrorMessage(null);
+    setSuccessMessage(null);
+
+    const jsonData = {
+      ...invoiceData,
+      ticket: ticketData.map((ticket) => ({
+        nome: ticket.nome,
+        cognome: ticket.cognome,
+        data_nascita: ticket.data_nascita,
+        postoASedere: {
+          fila: ticket.postoASedere.split(" ")[0],
+          numeroPosto: ticket.postoASedere.split(" ")[1],
+        },
+      })),
+    };
+
+    try {
+      const response = await postInvoice(jsonData, selectedProiezione.id_proiezione);
+      setSuccessMessage("Acquisto completato con successo!");
+      dispatch(filmsArray())
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
+    } catch (error) {
+      setErrorMessage(error.message || "Errore durante l'acquisto.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -67,8 +84,7 @@ const MyCheck = () => {
         {ticketData.map((ticket, index) => (
           <div key={index} className="mb-4">
             <h4 className="text-light">
-              Fila: {ticket.postoASedere.split(" ")[0]} - Posto:{" "}
-              {ticket.postoASedere.split(" ")[1]}
+              Fila: {ticket.postoASedere.split(" ")[0]} - Posto: {ticket.postoASedere.split(" ")[1]}
             </h4>
             <div className="d-flex">
               <Form>
@@ -94,10 +110,7 @@ const MyCheck = () => {
                   />
                 </Form.Group>
 
-                <Form.Group
-                  className="mb-3"
-                  controlId={`formDataNascitaTicket-${index}`}
-                >
+                <Form.Group className="mb-3" controlId={`formDataNascitaTicket-${index}`}>
                   <Form.Control
                     type="date"
                     name="data_nascita"
@@ -111,6 +124,7 @@ const MyCheck = () => {
           </div>
         ))}
       </Col>
+
       <Col>
         <h2 className="text-secondary">DATI DI FATTURAZIONE</h2>
 
@@ -178,10 +192,21 @@ const MyCheck = () => {
           </Row>
         </Form>
 
+        <Button
+          variant="primary"
+          className="mt-4"
+          onClick={handleSubmit}
+          disabled={isLoading}
+        >
+          {isLoading ? "Caricamento..." : "Invia Dati"}
+        </Button>
+
+        {/* Feedback messaggi */}
+        {errorMessage && <Alert variant="danger" className="mt-3">{errorMessage}</Alert>}
+        {successMessage && <Alert variant="success" className="mt-3">{successMessage}</Alert>}
+
         <h2 className="text-secondary mt-4">JSON Generato</h2>
-        <pre className="text-secondary">
-          {JSON.stringify(jsonData, null, 2)}
-        </pre>
+        <pre className="text-secondary">{JSON.stringify({ ...invoiceData, ticket: ticketData }, null, 2)}</pre>
       </Col>
     </>
   );

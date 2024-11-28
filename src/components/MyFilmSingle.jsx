@@ -86,7 +86,7 @@ const MyFilmSingle = () => {
           </div>
 
           <div className="d-flex justify-content-between">
-            <div className="d-flex gap-3 flex-wrap align-items-start">
+            <div className="d-flex gap-3 flex-wrap align-items-end">
               {film.proiezioneList.map((proiezione, index) => (
                 <div
                   key={index}

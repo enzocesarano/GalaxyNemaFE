@@ -13,7 +13,7 @@ const MyDaily = ({ proiezione }) => {
   }, [checkedSeats, dispatch]);
 
   if (!proiezione) {
-    return <p>Seleziona una proiezione per vedere i posti disponibili.</p>;
+    return <p className="text-danger">Seleziona una proiezione per vedere i posti disponibili.</p>;
   }
 
   const occupiedSeats = proiezione.ticketList.map((ticket) => {

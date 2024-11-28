@@ -110,7 +110,7 @@ export const register = (data) => {
           )
           .join("&");
   
-      fetch(url, { method: "GET" })
+      fetch(url,)
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -185,3 +185,26 @@ export const register = (data) => {
   
   
 
+  export const postInvoice = (data, id_proiezione) => {
+    return fetch("http://localhost:3001/me/invoices?id_proiezione=" + id_proiezione, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((errorData) => {
+            throw errorData;
+          });
+        }
+  
+        return response.json();
+      })
+      .catch((error) => {
+        console.error("Errore durante l'acquisto:", error.message);
+        throw error;
+      });
+  };
