@@ -5,7 +5,7 @@ const MyProfNav = ({ onLogout }) => {
   const logged = useSelector((store) => store.loginMe.loginMe);
 
   return (
-    <div className="d-flex fs-5 align-items-center">
+    <div className="d-none d-xl-flex fs-5 align-items-center ">
       <div className="w-10 me-3">
         <Image
           src={logged.avatar}
@@ -17,7 +17,6 @@ const MyProfNav = ({ onLogout }) => {
       <p className="text-secondary p-0 m-0 me-3">{logged.nome}</p>
       <i className="bi bi-bell-fill text-secondary me-3"></i>
 
-      {/* Icona di logout */}
       <i
         className="bi bi-box-arrow-right text-danger cursor-pointer"
         onClick={onLogout} 

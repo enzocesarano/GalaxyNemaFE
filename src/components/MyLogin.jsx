@@ -38,7 +38,7 @@ const MyLogin = ({ onLoginSuccess }) => {
 
 
   return (
-    <div className="flex-grow-1 d-none">
+    <div className="flex-grow-1">
       <p className="text-secondary fw-bold px-3 w-100 text-center text-xl-start rounded-4 fs-4 m-0 mb-3">
         Login<i className="bi bi-arrow-right-circle-fill ms-3 fs-5"></i>
       </p>

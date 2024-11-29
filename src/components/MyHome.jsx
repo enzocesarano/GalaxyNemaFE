@@ -17,11 +17,11 @@ const MyHome = () => {
       items: 5,
     },
     desktop: {
-      breakpoint: { max: 3000, min: 1024 },
+      breakpoint: { max: 3000, min: 1200 },
       items: 5,
     },
     tablet: {
-      breakpoint: { max: 1024, min: 464 },
+      breakpoint: { max: 1200, min: 464 },
       items: 5,
     },
     mobile: {
@@ -36,11 +36,11 @@ const MyHome = () => {
       items: 1,
     },
     desktop: {
-      breakpoint: { max: 3000, min: 1024 },
+      breakpoint: { max: 3000, min: 1200 },
       items: 1,
     },
     tablet: {
-      breakpoint: { max: 1024, min: 464 },
+      breakpoint: { max: 1200, min: 464 },
       items: 1,
     },
     mobile: {
@@ -50,7 +50,7 @@ const MyHome = () => {
   };
   
   return (
-    <Col className="col-12  col-xl-6 px-0 px-xl-3 h-100 overflow-card">
+    <Col className="col-12 col-xl-6 p-0 h-100 overflow-card">
       <div className="position-relative">
       <Carousel
         responsive={responsive2}
@@ -72,7 +72,7 @@ const MyHome = () => {
       </div>
       
       <MySearch />
-      <Row>
+      <Row className="p-0 m-0">
         <Col>
           <Carousel
             responsive={responsive}

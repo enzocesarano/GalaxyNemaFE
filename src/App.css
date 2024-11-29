@@ -1,6 +1,8 @@
+
 :root {
   --primary-color: #b4d429;
 }
+
 
 .nav-link {
   transition-duration: 0.2s !important;
@@ -9,6 +11,11 @@
   background-color: var(--primary-color) !important;
   color: rgb(0, 0, 0) !important;
 }
+
+.loginbutton{
+  background-color: #198754 !important;
+}
+
 
 .placeholder-light::placeholder {
   color: #6c757d !important;
@@ -21,8 +28,8 @@
 }
 
 .w-10 {
-  width: 40px !important;
-  height: 40px !important;
+  width: 30px !important;
+  height: 30px !important;
 }
 
 .cards {
@@ -38,11 +45,6 @@
 
 .cards div i {
   transition-duration: 0.3s;
-}
-
-.cards:hover div i {
-  color: var(--primary-color) !important;
-  transform: scale(1.3);
 }
 
 .cursor-pointer {

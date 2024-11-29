@@ -56,7 +56,7 @@ const MyFilmSingle = () => {
   };
 
   return (
-    <Col className="col-10 h-100">
+    <Col className="col-12 col-xl-10 h-100">
       <div className="rounded-4 w-100 h-100 overflow-hidden position-relative">
         <Image
           src={film.backdrop_url}

@@ -35,10 +35,9 @@ function App() {
       setIsAuthenticated(false);
     }
 
-    dispatch(filmsArray())
-    dispatch(filmsWhitoutProiezioni())
-    dispatch(newsCinema())
-    
+    dispatch(filmsArray());
+    dispatch(filmsWhitoutProiezioni());
+    dispatch(newsCinema());
   }, []);
 
   const handleLoginSuccess = () => {
@@ -53,12 +52,14 @@ function App() {
   const location = useLocation();
 
   return (
-    <Container fluid className="container-fluid p-0 p-md-4 bg-black">
-      <Row className="bg-dark h-100 rounded-4 p-4">
-        <Col className="col-xl-2 col-12 d-xl-flex pe-xl-5 flex-column justify-content-between fixed-bottomNav bg-dark">
-          <MyNav />
-          {!isAuthenticated && <MyLogin onLoginSuccess={handleLoginSuccess} />}
-          {isAuthenticated && <MyProfNav onLogout={handleLogout} />}
+    <Container fluid className="container-fluid p-0 p-xl-4 bg-black m-0">
+      <Row className="bg-dark h-100 p-0 p-4 rounded-4 m-0">
+        <Col className="col-xl-2 col-12 d-xl-flex p-0 pe-xl-5 flex-column justify-content-between fixed-bottomNav bg-dark">
+          <MyNav
+            isAuthenticated={isAuthenticated}
+            onLoginSuccess={handleLoginSuccess}
+            onLogout={handleLogout}
+          />
         </Col>
         <Routes>
           <Route path="/" element={<MyHome />} />
@@ -68,13 +69,18 @@ function App() {
           <Route path="/film/:id" element={<MyFilmSingle />} />
           <Route path="/checkout" element={<MyCheck />} />
         </Routes>
-          {!(
-            location.pathname.includes("/film/") ||
-            location.pathname.includes("/checkout")
-          ) && <Col className="col-12 col-xl-4 ps-xl-5 d-flex flex-column justify-content-between h-100 overflow-card"><MyNews /></Col>}
+        {!(
+          location.pathname.includes("/film/") ||
+          location.pathname.includes("/checkout")
+        ) && (
+          <Col className="col-12 col-xl-4 p-0 ps-xl-5 d-flex flex-column justify-content-between h-100 overflow-card">
+            <MyNews />
+          </Col>
+        )}
       </Row>
     </Container>
   );
 }
 
 export default App;
+
