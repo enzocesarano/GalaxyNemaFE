@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import MyDaily from "./MyDaily";
 import { selectProiezioneAction } from "../redux/actions";
 import Carousel from "react-multi-carousel";
+import MySearch from "./MySearch";
 
 const MyFilmSingle = () => {
   const { id } = useParams();

@@ -55,7 +55,7 @@ const MyHome = () => {
       <Carousel
         responsive={responsive2}
         infinite={true}
-        /* autoPlay={true} */
+        autoPlay={true}
         removeArrowOnDeviceType={["tablet", "mobile"]}
       >
         {isLoading
