@@ -27,12 +27,17 @@ const MyCards = ({ film, isLoading }) => {
 
   return (
     <Link to={`/film/${film.id_film}`} className="text-decoration-none">
-      <Card className="cards w-100 rounded-4 bg-transparent border-dark p-2 cursor-pointer d-flex flex-column justify-content-between" style={{ height: "16rem" }}>
-        <Card.Img
-          variant="top"
-          src={film.poster_url} 
-          className=" w-100 h-100 rounded-4 mb-2"
-        />
+      <Card className="cards w-100 rounded-4 bg-transparent border-dark p-2 cursor-pointer d-flex flex-column justify-content-between">
+        <div className="card-img-container">
+          <Card.Img
+            src={film.poster_url}
+            alt={film.title}
+          />
+        </div>
+        <Card.Body className="p-2">
+          <Card.Title className="text-truncate">{film.title}</Card.Title>
+          <Card.Text className="text-muted">{film.release_date}</Card.Text>
+        </Card.Body>
       </Card>
     </Link>
   );

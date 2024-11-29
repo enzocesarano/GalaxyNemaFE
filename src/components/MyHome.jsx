@@ -22,11 +22,11 @@ const MyHome = () => {
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
-      items: 2,
+      items: 5,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1,
+      items: 2,
     },
   };
 
@@ -50,7 +50,7 @@ const MyHome = () => {
   };
   
   return (
-    <Col className="col-6 px-3 h-100 overflow-card">
+    <Col className="col-12  col-xl-6 px-0 px-xl-3 h-100 overflow-card">
       <div className="position-relative">
       <Carousel
         responsive={responsive2}

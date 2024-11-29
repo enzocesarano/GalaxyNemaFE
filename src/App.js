@@ -53,9 +53,9 @@ function App() {
   const location = useLocation();
 
   return (
-    <Container fluid className="vh-100 p-5 bg-black">
-      <Row className="bg-dark h-100 rounded-5 p-4">
-        <Col className="col-2 pe-5 d-flex flex-column justify-content-between">
+    <Container fluid className="container-fluid p-0 p-md-4 bg-black">
+      <Row className="bg-dark h-100 rounded-4 p-4">
+        <Col className="col-xl-2 col-12 d-xl-flex pe-xl-5 flex-column justify-content-between fixed-bottomNav bg-dark">
           <MyNav />
           {!isAuthenticated && <MyLogin onLoginSuccess={handleLoginSuccess} />}
           {isAuthenticated && <MyProfNav onLogout={handleLogout} />}
@@ -71,7 +71,7 @@ function App() {
           {!(
             location.pathname.includes("/film/") ||
             location.pathname.includes("/checkout")
-          ) && <Col className="col-4 ps-5 d-flex flex-column justify-content-between h-100 overflow-card"><MyNews /></Col>}
+          ) && <Col className="col-12 col-xl-4 ps-xl-5 d-flex flex-column justify-content-between h-100 overflow-card"><MyNews /></Col>}
       </Row>
     </Container>
   );
