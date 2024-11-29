@@ -110,7 +110,7 @@ const MyFilmSingle = () => {
                   key={index}
                   className={`rounded-4 border sala p-3 text-light mb-3 cursor-pointer ${
                     selectedProiezione === proiezione
-                      ? "selected-proiezione"
+                      ? "active"
                       : ""
                   }`}
                   onClick={() => setSelectedProiezione(proiezione)}
@@ -130,33 +130,38 @@ const MyFilmSingle = () => {
             <MyDaily proiezione={selectedProiezione} />
           </div>
         </div>
-
-        {/* Layout per schermi piccoli */}
-        <Carousel
-          responsive={responsive}
-          infinite={true}
-          removeArrowOnDeviceType={["tablet", "mobile", "desktop"]}
-        >
-          {film.proiezioneList.map((proiezione, index) => (
-            <div
-              key={index}
-              className={`rounded-4 border sala salaschermopiccolo p-1 text-light mb-3 m-2 cursor-pointer ${
-                selectedProiezione === proiezione ? "selected-proiezione" : ""
-              }`}
-              onClick={() => setSelectedProiezione(proiezione)}
-            >
-              <p className="text-center sala-nome fw-bold m-0 p-0 pb-1 mb-1 border-bottom border-light">
-                {proiezione.sala.nome}
-              </p>
-              <p className="text-center m-0 sala-data fw-bold">
-                {dayjs(proiezione.dataProiezione).format("DD-MM")} - {dayjs(proiezione.oraInizio).format("HH:mm")}
-              </p>
-            </div>
-          ))}
-        </Carousel>
-
-        <MyDaily proiezione={selectedProiezione} />
       </div>
+
+      {/* Layout per schermi piccoli */}
+      <div className="d-xl-none">
+      <Carousel
+        responsive={responsive}
+        infinite={true}
+        removeArrowOnDeviceType={["tablet", "mobile", "desktop"]}
+        
+      >
+        {film.proiezioneList.map((proiezione, index) => (
+          <div
+            key={index}
+            className={`rounded-4 border sala salaschermopiccolo p-1 text-light mb-3 m-2 cursor-pointer ${
+              selectedProiezione === proiezione ? " active" : ""
+            }`}
+            onClick={() => setSelectedProiezione(proiezione)}
+          >
+            <p className="text-center sala-nome fw-bold m-0 p-0 pb-1 mb-1 border-bottom border-light">
+              {proiezione.sala.nome}
+            </p>
+            <p className="text-center m-0 sala-data fw-bold">
+              {dayjs(proiezione.dataProiezione).format("DD-MM")} -{" "}
+              {dayjs(proiezione.oraInizio).format("HH:mm")}
+            </p>
+          </div>
+        ))}
+      </Carousel>
+
+      <MyDaily proiezione={selectedProiezione} />
+      </div>
+      
     </Col>
   );
 };

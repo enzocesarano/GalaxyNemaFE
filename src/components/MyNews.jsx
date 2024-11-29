@@ -40,7 +40,7 @@ const MyNews = () => {
                     {article.author} - {new Date(article.publishedAt).toLocaleDateString()}
                   </p>
                 </div>
-                <p className="p-0 m-0 fs-supersmall">
+                <p className="p-0 m-0 fs-supersmall d-none d-md-block">
                   {article.description || "Lorem ipsum, dolor sit amet consectetur..."}
                 </p>
               </Card.Body>

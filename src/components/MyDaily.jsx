@@ -68,7 +68,7 @@ const MyDaily = ({ proiezione }) => {
           aria-label={seatValue}
         >
           <input
-            className={`posto m-1 ms-0 me-2 ${isRedSeat ? "poltrona" : ""} ${isOccupied ? "occupato" : ""}`}
+            className={`m-1 ms-0 ${isRedSeat ? "poltrona" : ""} ${isOccupied ? "occupato" : ""}`}
             type="checkbox"
             value={seatValue}
             checked={isChecked}
@@ -90,7 +90,7 @@ const MyDaily = ({ proiezione }) => {
   });
 
   return (
-    <div className="mb-3">
+    <div>
       <Card className="bg-transparent border-0 px-4 mb-2 text-secondary">
         <div className="w-100 align-items-center p-1">
           <div className="d-flex flex-column justify-content-between">

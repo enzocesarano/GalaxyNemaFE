@@ -33,7 +33,7 @@ const MyHero = ({ senzaproiezioni, isLoading }) => {
     <div className="mb-4 rounded-4  cursor-pointer border border-dark hero-hover position-relative">
       <Image src={senzaproiezioni.backdrop_url} className="rounded-4 w-100 hero" />
 
-      <div className="position-absolute w-100 h-100 p-5 icon-wrapper d-flex align-items-end">
+      <div className="position-absolute w-100 h-100 p-md-5 pb-3 icon-wrapper d-flex align-items-end">
         <div className="d-flex px-5">
           <div className="w-25 me-3">
             <Image
@@ -41,7 +41,7 @@ const MyHero = ({ senzaproiezioni, isLoading }) => {
               className=" w-100 rounded-4"
             />
           </div>
-          <div className="me-3 border-end flex-grow-0 flex-shrink-0">
+          <div className="me-3 flex-grow-0 flex-shrink-0">
             <p className="text-light fs-5 m-0 mb-1 me-3">{senzaproiezioni.titolo.length > 25
                 ? senzaproiezioni.titolo.substring(0, 25) + "..."
                 : senzaproiezioni.titolo}</p>
@@ -50,8 +50,8 @@ const MyHero = ({ senzaproiezioni, isLoading }) => {
               {renderStars(senzaproiezioni.voteAverage)}
             </div>
           </div>
-          <div className="w-75">
-            <p className="text-light fs-small m-0">
+          <div className="w-75 d-none d-md-block">
+            <p className="text-light fs-small m-0 ">
               {senzaproiezioni.descrizione.length > 400
                 ? senzaproiezioni.descrizione.substring(0, 400) + "..."
                 : senzaproiezioni.descrizione}
