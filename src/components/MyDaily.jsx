@@ -81,7 +81,7 @@ const MyDaily = ({ proiezione }) => {
 
     rows.push(
       <li
-        className="list-unstyled text-secondary d-flex justify-content-start mb-1"
+        className="list-unstyled text-secondary d-flex justify-content-center mb-1"
         key={`row-${rowLetter}`}
       >
         {rowSeats}

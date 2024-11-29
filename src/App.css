@@ -212,9 +212,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   font-size: 0.6em !important;
 }
 
-.backdropFilmSingle {
-  filter: brightness(0.3);
-}
 
 .w-18 {
   width: 18% !important;
@@ -247,7 +244,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .container-fluid {
     height: auto;
     padding: 0 !important;
-  margin: 0 auto;
+    margin: 0 auto;
   }
 }
 
@@ -262,3 +259,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 }
 
+
+.sala-nome {
+  font-size: 0.7rem !important;
+}
+
+.sala-data {
+  font-size: 0.6rem !important;
+}
+
+.sala-orario {
+  font-size: 0.5rem !important;
+}
+
+.salaschermopiccolo{
+  width: 80px !important;
+  height: 60px !important;
+}

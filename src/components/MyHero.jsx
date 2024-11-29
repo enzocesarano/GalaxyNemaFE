@@ -38,7 +38,7 @@ const MyHero = ({ senzaproiezioni, isLoading }) => {
           <div className="w-25 me-3">
             <Image
               src={senzaproiezioni.poster_url}
-              className="image-topHero w-100 rounded-4"
+              className=" w-100 rounded-4"
             />
           </div>
           <div className="me-3 border-end flex-grow-0 flex-shrink-0">
