@@ -73,7 +73,8 @@ function App() {
           location.pathname.includes("/film/") ||
           location.pathname.includes("/checkout")
         ) && (
-          <Col className="col-12 col-xl-4 p-0 ps-xl-5 d-flex flex-column justify-content-between h-100 overflow-card">
+          <Col className={`p-0 ps-xl-5 d-flex flex-column justify-content-between h-100 overflow-card mb-5 ${(location.pathname.includes("/news")) ? "col-12 col-xl-10" : "col-12 col-xl-4"
+          }`}>
             <MyNews />
           </Col>
         )}

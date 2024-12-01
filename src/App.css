@@ -256,7 +256,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 }
 
-@media (max-width: 1199px) {
+@media (max-width: 1200px) {
   .fixed-bottomNav {
     z-index: 1000;
     position: fixed;

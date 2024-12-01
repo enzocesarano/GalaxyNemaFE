@@ -33,9 +33,9 @@ const MyHero = ({ senzaproiezioni, isLoading }) => {
     <div className="mb-4 rounded-4  cursor-pointer border border-dark hero-hover position-relative">
       <Image src={senzaproiezioni.backdrop_url} className="rounded-4 w-100 hero" />
 
-      <div className="position-absolute w-100 h-100 p-md-5 pb-3 icon-wrapper d-flex align-items-end">
+      <div className="position-absolute w-100 h-100 p-md-5 pb-3 icon-wrapper d-flex align-items-end ">
         <div className="d-flex px-5">
-          <div className="w-25 me-3">
+          <div className="w-25 me-3 d-none d-md-block">
             <Image
               src={senzaproiezioni.poster_url}
               className=" w-100 rounded-4"

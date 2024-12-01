@@ -16,7 +16,7 @@ const MyNav = ({ isAuthenticated, onLoginSuccess, onLogout }) => {
   return (
     <Navbar
       expand="xl"
-      className="d-flex flex-row flex-xl-column p-0 mb-3 text-center text-xl-start "
+      className="d-flex flex-row flex-xl-column p-0 mb-xl-3 text-center text-xl-start "
     >
       <div className="w-100 mb-5 d-none d-xl-block">
         <img

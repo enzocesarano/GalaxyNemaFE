@@ -46,20 +46,20 @@ const MySearch = () => {
 
   return (
     <Form className="mb-4 mt-1" onSubmit={handleSearch}>
-      <div className="d-flex mb-3 px-2">
+      <div className="d-flex mb-3">
         <Form.Control
           type="text"
           placeholder="Cerca..."
           name="titolo"
           value={filters.titolo}
           onChange={handleInputChange}
-          className="rounded-4 px-4 py-2 bg-black text-light border-0 placeholder-light w-75 me-2"
+          className="rounded-4 px-4 py-2 bg-black text-light border-0 placeholder-light w-75 me-2 fs-small"
         />
         <Form.Select
           name="sortBy"
           value={filters.sortBy}
           onChange={handleInputChange}
-          className="rounded-4 px-4 py-2 bg-black text-secondary placeholder-light border-0 w-25 me-2"
+          className="rounded-4 px-4 py-2 bg-black text-secondary placeholder-light border-0 w-25 me-2 fs-small"
         >
           <option value="">Ordina per</option>
           <option value="titolo">Titolo</option>
@@ -67,14 +67,14 @@ const MySearch = () => {
           <option value="dataUscita">Data di Uscita</option>
         </Form.Select>
         <Button
-        className="botton-check border-0 rounded-4 text-black fw-bold me-2"
+        className="botton-check border-0 rounded-4 text-black fw-bold me-2 fs-small"
         onClick={() => setShowFilters(!showFilters)}
       >
         Filtri
       </Button>
         <Button
           type="submit"
-          className="botton-check border-0 rounded-4 text-black fw-bold"
+          className="botton-check border-0 rounded-4 text-black fw-bold fs-small"
         >
           Search
         </Button>
@@ -82,12 +82,12 @@ const MySearch = () => {
 
       <Collapse in={showFilters}>
         <div>
-          <div className="d-flex flex-wrap flex-lg-nowrap gap-2 mt-3">
+          <div className="d-flex flex-wrap flex-sm-nowrap gap-2 mt-3">
             <Form.Select
               name="genere"
               value={filters.genere}
               onChange={handleInputChange}
-              className="rounded-4 px-4 py-2 bg-black border-0 placeholder-light text-secondary"
+              className="rounded-4 px-4 py-2 bg-black border-0 placeholder-light text-secondary fs-small"
             >
               <option value="">GENERE</option>
               <option value="AZIONE">AZIONE</option>
@@ -117,7 +117,7 @@ const MySearch = () => {
               name="proiezioneAfter"
               value={filters.proiezioneAfter}
               onChange={handleInputChange}
-              className="rounded-4 px-4 py-2 bg-black text-secondary placeholder-light border-0"
+              className="rounded-4 px-4 py-2 bg-black text-secondary placeholder-light border-0 fs-small"
             />
 
             <Form.Control
@@ -126,7 +126,7 @@ const MySearch = () => {
               name="proiezioneBefore"
               value={filters.proiezioneBefore}
               onChange={handleInputChange}
-              className="rounded-4 px-4 py-2 bg-black text-secondary placeholder-light border-0"
+              className="rounded-4 px-4 py-2 bg-black text-secondary placeholder-light border-0 fs-small"
             />
 
             <Form.Select
@@ -140,7 +140,7 @@ const MySearch = () => {
                 }
                 handleInputChange(e);
               }}
-              className="rounded-4 px-4 py-2 bg-black border-0 text-secondary placeholder-light"
+              className="rounded-4 px-4 py-2 bg-black border-0 text-secondary placeholder-light fs-small"
             >
               <option value="">Voto Min</option>
               <option value="1">1</option>
@@ -166,7 +166,7 @@ const MySearch = () => {
                 }
                 handleInputChange(e);
               }}
-              className="rounded-4 px-4 py-2 bg-black border-0 text-secondary placeholder-light"
+              className="rounded-4 px-4 py-2 bg-black border-0 text-secondary placeholder-light fs-small"
             >
               <option value="">Voto Max</option>
               <option value="1">1</option>

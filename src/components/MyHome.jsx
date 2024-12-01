@@ -7,8 +7,10 @@ import Carousel from "react-multi-carousel";
 
 const MyHome = () => {
   const films = useSelector((state) => state.proiezioni.proiezioni);
-  
-  const senzaproiezioni = useSelector((state) => state.senzaproiezioni.senzaproiezioni);
+
+  const senzaproiezioni = useSelector(
+    (state) => state.senzaproiezioni.senzaproiezioni
+  );
   const isLoading = films.length === 0;
 
   const responsive = {
@@ -48,29 +50,29 @@ const MyHome = () => {
       items: 1,
     },
   };
-  
+
   return (
     <Col className="col-12 col-xl-6 p-0 h-100 overflow-card">
       <div className="position-relative">
-      <Carousel
-        responsive={responsive2}
-        infinite={true}
-        autoPlay={true}
-        removeArrowOnDeviceType={["tablet", "mobile"]}
-      >
-        {isLoading
-          ? Array.from({ length: 1 }).map((_, index) => (
-              <MyHero key={index} isLoading={true} />
-            ))
-          : (senzaproiezioni.content || []).map((senzaproiezioni, index) => (
-              <MyHero key={index} senzaproiezioni={senzaproiezioni} />
-            ))}
-      </Carousel>
-      <div className="w-100 position-absolute prossimamente translate-middle text-center border-1 fw-bold">
-      <p>COMING SOON</p>
-    </div>
+        <Carousel
+          responsive={responsive2}
+          infinite={true}
+          autoPlay={true}
+          removeArrowOnDeviceType={["tablet", "mobile"]}
+        >
+          {isLoading
+            ? Array.from({ length: 1 }).map((_, index) => (
+                <MyHero key={index} isLoading={true} />
+              ))
+            : (senzaproiezioni.content || []).map((senzaproiezioni, index) => (
+                <MyHero key={index} senzaproiezioni={senzaproiezioni} />
+              ))}
+        </Carousel>
+        <div className="w-100 position-absolute prossimamente translate-middle text-center border-1 fw-bold">
+          <p>COMING SOON</p>
+        </div>
       </div>
-      
+
       <MySearch />
       <Row className="p-0 m-0">
         <Col>
