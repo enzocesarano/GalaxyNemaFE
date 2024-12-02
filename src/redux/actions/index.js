@@ -7,6 +7,9 @@ export const SENZA_PROIEZIONI = "SENZA_PROIEZIONI"
 export const SELECT_TICKET = "SELECT_TICKET";
 export const NEWS = "NEWS"
 export const SELECT_PROIEZIONE = "SELECT_PROIEZIONE"
+export const AGGIUNGI_PREFERITO = "GGIUNGI_PREFERITO"
+export const RIMUOVI_PREFERITO = "RIMUOVI_PREFERITO"
+export const SET_PREFERITI = "SET_PREFERITI"
 
 export const selectTicket = (tickets) => ({
   type: SELECT_TICKET,
@@ -207,4 +210,84 @@ export const register = (data) => {
         console.error("Errore durante l'acquisto:", error.message);
         throw error;
       });
+  };
+
+  export const getPreferiti = () => {
+    return(dispatch) => {
+      fetch('http://localhost:3001/me/films/preferiti', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Errore nel recupero dei dati");
+        }
+      })
+      .then((data) => {
+        console.log("preferiti: ", data);
+        dispatch({
+          type: SET_PREFERITI,
+          payload: data,
+        });
+      })
+      .catch((error) => {
+        console.error('Errore durante il recupero dei preferiti:', error);
+      });
+    };
+  };
+
+
+  export const addPreferiti = (film) => {
+    return(dispatch) => {
+      fetch(`http://localhost:3001/me/films/${film.id_film}/preferiti`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(film),
+      })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Errore durante l\'aggiunta ai preferiti');
+        }
+        dispatch({
+          type: AGGIUNGI_PREFERITO,
+          payload: film,
+        });
+      })
+      .catch((error) => {
+        console.error("Errore durante l'aggiunta ai preferiti:", error.message);
+          throw error;
+      });
+    } 
+  };
+
+  export const removePreferiti = (film) => {
+    return(dispatch) => {
+      fetch(`http://localhost:3001/me/films/${film.id_film}/preferiti`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Errore durante l\'aggiunta ai preferiti');
+        }
+        dispatch({
+          type: RIMUOVI_PREFERITO,
+          payload: film,
+        });
+      })
+      .catch((error) => {
+        console.error("Errore: ", error.message);
+          throw error;
+      });
+    } 
   };

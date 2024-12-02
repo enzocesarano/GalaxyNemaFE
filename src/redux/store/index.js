@@ -6,6 +6,7 @@ import senzaproiezioni from '../reducers/films';
 import { selectedTickets } from '../reducers/ticket';
 import news from '../reducers/news';
 import { selectedProiezione } from '../reducers/selectedProiezione';
+import preferiti from '../reducers/preferiti';
 
 const bigReducer = combineReducers({
     loginMe: loginMe,
@@ -14,7 +15,8 @@ const bigReducer = combineReducers({
     senzaproiezioni: senzaproiezioni,
     selectedTickets: selectedTickets,
     news: news,
-    selectedProiezione: selectedProiezione
+    selectedProiezione: selectedProiezione,
+    preferiti: preferiti,
 });
 
 const store = configureStore({

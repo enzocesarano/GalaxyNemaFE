@@ -45,7 +45,7 @@ const MySearch = () => {
   };
 
   return (
-    <Form className="mb-4 mt-1" onSubmit={handleSearch}>
+    <Form className="mb-4 mt-1 px-2" onSubmit={handleSearch}>
       <div className="d-flex mb-3">
         <Form.Control
           type="text"

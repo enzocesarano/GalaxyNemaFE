@@ -59,10 +59,6 @@
   color: black !important;
 }
 
-.active p {
-  border-color: black !important;
-}
-
 .hero-hover {
   transition-duration: 0.2s;
 }
@@ -83,6 +79,12 @@
 
 .heroSingleFilm {
   filter: brightness(0.3);
+}
+
+@media (max-width: 1200px) {
+  .heroSingleFilm {
+    filter: none !important;
+  }
 }
 
 .prossimamente {
@@ -222,7 +224,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 .w-18 {
-  width: 18% !important;
+  width: 15% !important;
 }
 
 
@@ -265,22 +267,4 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     width: 100%;
     max-width: inherit;
   }
-}
-
-
-.sala-nome {
-  font-size: 0.7rem !important;
-}
-
-.sala-data {
-  font-size: 0.6rem !important;
-}
-
-.sala-orario {
-  font-size: 0.5rem !important;
-}
-
-.salaschermopiccolo{
-  width: 80px !important;
-  height: 60px !important;
 }

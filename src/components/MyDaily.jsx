@@ -6,29 +6,44 @@ import { Link } from "react-router-dom";
 
 const MyDaily = ({ proiezione }) => {
   const dispatch = useDispatch();
-  const selectedTickets = useSelector((store) => store.selectedTickets.selectedTickets);
+  const selectedTickets = useSelector(
+    (store) => store.selectedTickets.selectedTickets
+  );
 
   useEffect(() => {
     if (proiezione && proiezione.id_proiezione) {
-      const savedSeats = JSON.parse(localStorage.getItem(`selectedTickets_${proiezione.id_proiezione}`)) || [];
-      dispatch(selectTicket(savedSeats)); 
+      const savedSeats =
+        JSON.parse(
+          localStorage.getItem(`selectedTickets_${proiezione.id_proiezione}`)
+        ) || [];
+      dispatch(selectTicket(savedSeats));
     }
   }, [proiezione, dispatch]);
 
   const toggleSeat = (seat) => {
-    const savedSeats = JSON.parse(localStorage.getItem(`selectedTickets_${proiezione.id_proiezione}`)) || [];
+    const savedSeats =
+      JSON.parse(
+        localStorage.getItem(`selectedTickets_${proiezione.id_proiezione}`)
+      ) || [];
 
     const updatedSeats = savedSeats.includes(seat)
       ? savedSeats.filter((s) => s !== seat)
       : [...savedSeats, seat];
 
-    localStorage.setItem(`selectedTickets_${proiezione.id_proiezione}`, JSON.stringify(updatedSeats));
+    localStorage.setItem(
+      `selectedTickets_${proiezione.id_proiezione}`,
+      JSON.stringify(updatedSeats)
+    );
 
     dispatch(selectTicket(updatedSeats));
   };
 
   if (!proiezione) {
-    return <p className="text-danger">Seleziona una proiezione per vedere i posti disponibili.</p>;
+    return (
+      <p className="text-danger">
+        Seleziona una proiezione per vedere i posti disponibili.
+      </p>
+    );
   }
 
   const occupiedSeats = proiezione.ticketList.map((ticket) => {
@@ -44,7 +59,9 @@ const MyDaily = ({ proiezione }) => {
   const priceMultiplier = proiezione.moltiplicatore_prezzo;
 
   const calculatePrice = (rowLetter) =>
-    rowLetter === "D" ? (basePrice + premiumIncrement) * priceMultiplier : basePrice * priceMultiplier;
+    rowLetter === "D"
+      ? (basePrice + premiumIncrement) * priceMultiplier
+      : basePrice * priceMultiplier;
 
   const selectedSeatPrices = selectedTickets.map((seat) => {
     const rowLetter = seat.split(" ")[0];
@@ -68,12 +85,14 @@ const MyDaily = ({ proiezione }) => {
           aria-label={seatValue}
         >
           <input
-            className={`m-1 ms-0 ${isRedSeat ? "poltrona" : ""} ${isOccupied ? "occupato" : ""}`}
+            className={`m-1 ms-0 mb-0 ${isRedSeat ? "poltrona" : ""} ${
+              isOccupied ? "occupato" : ""
+            }`}
             type="checkbox"
             value={seatValue}
             checked={isChecked}
             disabled={isOccupied}
-            onChange={() => toggleSeat(seatValue)} 
+            onChange={() => toggleSeat(seatValue)}
           />
         </label>
       );
@@ -89,22 +108,39 @@ const MyDaily = ({ proiezione }) => {
     );
   });
 
+  // Leggi l'autenticazione da localStorage
+  const isAuthenticated = localStorage.getItem("token") !== null;
+
+  // Condizione per il messaggio di checkout
+  const isCheckoutDisabled = selectedTickets.length === 0 || !isAuthenticated;
+
   return (
-    <div className="mb-5">
+    <div className="mb-5 mb-xl-0">
       <Card className="bg-transparent border-0 px-4 mb-2 text-secondary">
         <div className="w-100 align-items-center p-1">
           <div className="d-flex flex-column justify-content-between">
             <ol className="w-100 p-0 m-0">{rows}</ol>
             <div className="d-flex flex-column align-items-center">
               <div className="w-100 mb-2">
-                <p className="text-center fw-bold m-0 p-0">Totale: €{totalPrice.toFixed(2)}</p>
+                <p className="text-center fw-bold m-0 p-0">
+                  Totale: €{totalPrice.toFixed(2)}
+                </p>
               </div>
               <div className="mb-2">
                 <Link
-                  to="/checkout"
-                  className="btn botton-check border-0 rounded-4 text-black fw-bold"
+                  to={isAuthenticated && selectedTickets.length > 0 ? "/checkout" : ""}
+                  className={`btn botton-check border-0 rounded-4 fw-bold ${isCheckoutDisabled ? "text-danger disabled" : "text-black"}`}
+                  onClick={(e) => {
+                    if (isCheckoutDisabled) {
+                      e.preventDefault();
+                    }
+                  }}
                 >
-                  Checkout
+                  {isAuthenticated && selectedTickets.length === 0
+                    ? "Seleziona un posto"
+                    : isCheckoutDisabled
+                    ? "Effettua il login e seleziona un posto"
+                    : "Checkout"}
                 </Link>
               </div>
             </div>

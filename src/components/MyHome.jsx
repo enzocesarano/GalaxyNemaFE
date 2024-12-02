@@ -7,7 +7,6 @@ import Carousel from "react-multi-carousel";
 
 const MyHome = () => {
   const films = useSelector((state) => state.proiezioni.proiezioni);
-
   const senzaproiezioni = useSelector(
     (state) => state.senzaproiezioni.senzaproiezioni
   );
@@ -51,6 +50,12 @@ const MyHome = () => {
     },
   };
 
+  const generi = ["AZIONE", "COMMEDIA", "DRAMMA", "FANTASY", "CRIME", "THRILLER", "HORROR"];
+
+  const altriGeneri = films.content
+    ? films.content.filter((film) => !generi.includes(film.genere))
+    : [];
+
   return (
     <Col className="col-12 col-xl-6 p-0 h-100 overflow-card">
       <div className="position-relative">
@@ -74,23 +79,54 @@ const MyHome = () => {
       </div>
 
       <MySearch />
-      <Row className="p-0 m-0">
-        <Col>
-          <Carousel
-            responsive={responsive}
-            infinite={true}
-            itemClass="m-1"
-            removeArrowOnDeviceType={["tablet", "mobile"]}
-          >
-            {isLoading
-              ? Array.from({ length: 5 }).map((_, index) => (
-                  <MyCards key={index} isLoading={true} />
-                ))
-              : (films.content || []).map((film, index) => (
-                  <MyCards key={index} film={film} />
-                ))}
-          </Carousel>
-        </Col>
+      <Row className="p-0 m-0 flex-column">
+        {generi.map((genere) => {
+          const filmsByGenre = films.content
+            ? films.content.filter((film) => film.genere === genere)
+            : [];
+
+          if (filmsByGenre.length === 0) return null;
+
+          return (
+            <Col key={genere} className="mb-4">
+              <h3 className="text-start text-uppercase text-secondary">{genere}</h3>
+              <Carousel
+                responsive={responsive}
+                infinite={true}
+                itemClass="m-1"
+                removeArrowOnDeviceType={["tablet", "mobile"]}
+              >
+                {isLoading
+                  ? Array.from({ length: 5 }).map((_, index) => (
+                      <MyCards key={index} isLoading={true} />
+                    ))
+                  : filmsByGenre.map((film, index) => (
+                      <MyCards key={index} film={film} />
+                    ))}
+              </Carousel>
+            </Col>
+          );
+        })}
+
+        {altriGeneri.length > 0 && (
+          <Col className="mb-4">
+            <h3 className="text-start text-uppercase text-secondary">Altri Generi</h3>
+            <Carousel
+              responsive={responsive}
+              infinite={true}
+              itemClass="m-1"
+              removeArrowOnDeviceType={["tablet", "mobile"]}
+            >
+              {isLoading
+                ? Array.from({ length: 5 }).map((_, index) => (
+                    <MyCards key={index} isLoading={true} />
+                  ))
+                : altriGeneri.map((film, index) => (
+                    <MyCards key={index} film={film} />
+                  ))}
+            </Carousel>
+          </Col>
+        )}
       </Row>
     </Col>
   );
