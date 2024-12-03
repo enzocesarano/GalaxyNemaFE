@@ -16,7 +16,7 @@ const isLocalhost = Boolean(
       }
   
       window.addEventListener('load', () => {
-        const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+        const swUrl = `${process.env.PUBLIC_URL}/serviceWorkerRegistration.js`;
   
         if (isLocalhost) {
           // In localhost, check if a service worker still exists or not.
