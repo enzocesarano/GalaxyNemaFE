@@ -6,9 +6,9 @@ const urlsToCache = [
   '/index.html',
   '/iconGALAXY-02.png',
   '/manifest.json',
-  '/static/js/main.[hash].js', 
-  '/static/css/main.[hash].css',
-  '/static/media/logo.[hash].svg',
+  '/src/index.js', 
+  '/src/index.css',
+  '/logo.svg',
 ];
 
 
