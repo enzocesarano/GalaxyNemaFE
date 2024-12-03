@@ -4,10 +4,11 @@ const CACHE_NAME = 'my-cache-v1';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/static/js/main.js',
-  '/static/css/main.css',
-  '/favicon.ico',
-
+  '/iconGALAXY-02.png',
+  '/manifest.json',
+  '/static/js/main.[hash].js', 
+  '/static/css/main.[hash].css',
+  '/static/media/logo.[hash].svg',
 ];
 
 
