@@ -16,22 +16,13 @@ const isLocalhost = Boolean(
       }
   
       window.addEventListener('load', () => {
-        const swUrl = `${process.env.PUBLIC_URL}/serviceWorkerRegistration.js`;
+        const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`; // Percorso corretto al service-worker.js
   
         if (isLocalhost) {
-          // In localhost, check if a service worker still exists or not.
+          // Verifica se c'è un service worker valido in localhost
           checkValidServiceWorker(swUrl, config);
-  
-          // Add some additional logging to localhost, pointing developers to the
-          // service worker/PWA documentation.
-          navigator.serviceWorker.ready.then(() => {
-            console.log(
-              'This web app is being served cache-first by a service ' +
-                'worker. To learn more, visit https://cra.link/PWA'
-            );
-          });
         } else {
-          // Is not localhost. Just register service worker
+          // Altrimenti, registra il service worker
           registerValidSW(swUrl, config);
         }
       });
@@ -50,17 +41,12 @@ const isLocalhost = Boolean(
           installingWorker.onstatechange = () => {
             if (installingWorker.state === 'installed') {
               if (navigator.serviceWorker.controller) {
-                console.log(
-                  'New content is available and will be used when all ' +
-                    'tabs for this page are closed. See https://cra.link/PWA.'
-                );
-  
+                console.log('New content is available and will be used when all tabs for this page are closed.');
                 if (config && config.onUpdate) {
                   config.onUpdate(registration);
                 }
               } else {
                 console.log('Content is cached for offline use.');
-  
                 if (config && config.onSuccess) {
                   config.onSuccess(registration);
                 }
@@ -80,26 +66,18 @@ const isLocalhost = Boolean(
     })
       .then((response) => {
         const contentType = response.headers.get('content-type');
-        // Verifica che la risposta sia 200 e che il tipo di contenuto sia JavaScript
-        if (
-          response.status === 404 ||
-          (contentType != null && contentType.indexOf('javascript') === -1)
-        ) {
-          // Se il file non è trovato o ha un tipo MIME errato, cancella la registrazione
+        if (response.status === 404 || (contentType != null && contentType.indexOf('javascript') === -1)) {
           navigator.serviceWorker.ready.then((registration) => {
             registration.unregister().then(() => {
               window.location.reload();
             });
           });
         } else {
-          // Il file esiste ed è un JavaScript valido, quindi registralo
           registerValidSW(swUrl, config);
         }
       })
       .catch(() => {
-        console.log(
-          'No internet connection found. App is running in offline mode.'
-        );
+        console.log('No internet connection found. App is running in offline mode.');
       });
   }
   
