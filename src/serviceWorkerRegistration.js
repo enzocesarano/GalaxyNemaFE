@@ -1,4 +1,5 @@
 // serviceWorkerRegistration.js
+
 const isLocalhost = Boolean(
     window.location.hostname === 'localhost' ||
       window.location.hostname === '[::1]' ||
@@ -79,16 +80,19 @@ const isLocalhost = Boolean(
     })
       .then((response) => {
         const contentType = response.headers.get('content-type');
+        // Verifica che la risposta sia 200 e che il tipo di contenuto sia JavaScript
         if (
           response.status === 404 ||
           (contentType != null && contentType.indexOf('javascript') === -1)
         ) {
+          // Se il file non è trovato o ha un tipo MIME errato, cancella la registrazione
           navigator.serviceWorker.ready.then((registration) => {
             registration.unregister().then(() => {
               window.location.reload();
             });
           });
         } else {
+          // Il file esiste ed è un JavaScript valido, quindi registralo
           registerValidSW(swUrl, config);
         }
       })
