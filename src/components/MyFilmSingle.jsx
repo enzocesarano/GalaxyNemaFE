@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
   addPreferiti,
-  getPreferiti,
   removePreferiti,
   selectProiezioneAction,
 } from "../redux/actions";
