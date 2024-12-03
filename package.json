@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^14.2.0",
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.11.3",
+    "cra-template-pwa": "^2.0.0",
     "dayjs": "^1.11.13",
     "m7-d1-remote-jobs-hw": "file:",
     "react": "^18.1.0",
@@ -43,5 +44,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "workbox-webpack-plugin": "^7.3.0"
   }
 }

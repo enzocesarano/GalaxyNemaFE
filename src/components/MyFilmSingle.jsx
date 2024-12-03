@@ -181,8 +181,8 @@ const MyFilmSingle = () => {
                 {film.titolo}{" "}
                 <i
                   className={`bi bi-heart${
-                    isFavorite ? "-fill" : ""
-                  } text-danger ms-2 cursor-pointer`}
+                    isFavorite ? "-fill text-danger" : ""
+                  }  ms-2 cursor-pointer fs-5`}
                   onClick={toggleFavorite}
                 ></i>
               </p>
@@ -294,8 +294,8 @@ const MyFilmSingle = () => {
                 {film.titolo}{" "}
                 <i
                   className={`bi bi-heart${
-                    isFavorite ? "-fill" : ""
-                  } text-danger ms-2 cursor-pointer`}
+                    isFavorite ? "-fill text-danger" : ""
+                  }  ms-2 cursor-pointer fs-5`}
                   onClick={toggleFavorite}
                 ></i>
               </p>
